@@ -1,0 +1,12 @@
+{
+  "name": "pospia-main-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "update-news": "node scripts/update-news.mjs"
+  },
+  "devDependencies": {
+    "sharp": "0.33.5"
+  }
+}

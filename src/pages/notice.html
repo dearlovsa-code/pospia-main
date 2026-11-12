@@ -1,0 +1,32 @@
+<!-- title: 공지사항 | 포스피아 POSPIA | desc: 포스피아의 새로운 소식과 안내를 전해 드립니다. | nav: notice -->
+<section class="subhero">
+  <div class="bg"><img src="assets/img/tera-storefront.webp" alt="" width="966" height="725"></div>
+  <div class="wrap">
+    <h1><span class="disp split">Notice</span><span class="ko" data-up style="--dl:.4s">공지사항</span></h1>
+    <nav class="crumb" aria-label="현재 위치" data-up style="--dl:.5s"><a href="index.html">HOME</a><svg class="ico s"><use href="#i-chev"/></svg><span>공지사항</span></nav>
+  </div>
+</section>
+
+<section class="notice" aria-labelledby="nt">
+  <div class="wrap">
+    <h2 class="sr" id="nt">공지사항 목록</h2>
+    <div class="nbar" data-up>
+      <p>Total <b id="ntotal">3</b>건</p>
+      <form id="nform" class="nsearch" role="search">
+        <label class="sr" for="nsearch">공지사항 검색</label>
+        <input id="nsearch" type="search" placeholder="제목, 내용으로 검색" autocomplete="off">
+        <button type="submit" aria-label="검색"><svg class="ico"><use href="#i-search"/></svg></button>
+      </form>
+    </div>
+    <!-- 공지 추가: 아래 <li class="nrow"> 하나를 복사해 맨 위에 붙이고 번호(id="n4")·제목·날짜·내용을 바꾼 뒤 node scripts/build.mjs -->
+    <ul class="nlist" data-up>
+      <li class="nrow" id="n3"><button type="button" aria-expanded="false"><span class="tag">공지</span><span class="t">포스피아 홈페이지가 새롭게 바뀌었습니다</span><span class="d">2026.11.12</span><svg class="ico ar"><use href="#i-plus"/></svg></button>
+        <div class="nbody" hidden><p>회사소개·제품소개·가입절차를 한눈에 보실 수 있도록 홈페이지를 새롭게 단장했습니다.</p><p>설치사례는 <a href="https://blog.naver.com/PostList.naver?blogId=pos-pia&amp;categoryNo=1" target="_blank" rel="noopener">포스피아 블로그</a>에서, 외국인 손님 부가세 환급 안내는 <a href="https://taxrefund.pos-pia.workers.dev/" target="_blank" rel="noopener">POSPIA TAX REFUND</a>에서 확인하실 수 있습니다.</p></div></li>
+      <li class="nrow" id="n2"><button type="button" aria-expanded="false"><span class="tag tag--soft">안내</span><span class="t">카카오톡 채널로도 상담받으실 수 있습니다</span><span class="d">2026.11.12</span><svg class="ico ar"><use href="#i-plus"/></svg></button>
+        <div class="nbody" hidden><p>전화 연결이 어려우실 때는 카카오톡 채널 ‘포스피아’로 문의를 남겨 주세요. 확인하는 대로 답변드리겠습니다.</p><p><a href="http://pf.kakao.com/_KFGBn/chat" target="_blank" rel="noopener">카카오톡 채널 상담 바로가기</a></p></div></li>
+      <li class="nrow" id="n1"><button type="button" aria-expanded="false"><span class="tag tag--soft">안내</span><span class="t">고객센터 운영시간 안내 (평일 09:30 – 18:30)</span><span class="d">2026.11.12</span><svg class="ico ar"><use href="#i-plus"/></svg></button>
+        <div class="nbody" hidden><p>포스피아 고객센터 1577-7107은 평일 09:30부터 18:30까지 운영합니다. 이메일 <a href="mailto:pos-pia@naver.com">pos-pia@naver.com</a>으로도 문의하실 수 있습니다.</p></div></li>
+    </ul>
+    <p class="nempty" id="nempty" hidden>검색 결과가 없습니다.</p>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+.git
+.github
+.gitignore
+.assetsignore
+node_modules
+src
+scripts
+screenshots
+미리보기
+CLAUDE.md
+README.md
+package.json
+package-lock.json
+wrangler.jsonc

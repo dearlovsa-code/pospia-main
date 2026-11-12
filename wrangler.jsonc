@@ -1,0 +1,11 @@
+// Cloudflare Workers settings: serve this folder as a static website.
+// Files listed in .assetsignore are not published.
+{
+  "name": "pospia-main",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "."
+  }
+}

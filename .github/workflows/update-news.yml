@@ -1,0 +1,38 @@
+# Refreshes the home page "Cases" cards from the blog's 설치사례 category.
+# Runs every 6 hours, and can be started by hand from the Actions tab.
+name: 설치사례 자동 업데이트
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-news
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: node scripts/update-news.mjs
+      - name: Commit if the cards changed
+        run: |
+          git add -A src/pages/index.html index.html assets/news 미리보기
+          if git diff --cached --quiet; then
+            echo "no new posts"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "설치사례 자동 업데이트"
+          git push
