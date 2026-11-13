@@ -151,8 +151,6 @@ section { padding-block: var(--section); }
 .mnav.open > ul > li { opacity: 1; transform: none; }
 .mnav > ul > li:nth-child(2) { transition-delay: .04s; } .mnav > ul > li:nth-child(3) { transition-delay: .08s; } .mnav > ul > li:nth-child(4) { transition-delay: .12s; } .mnav > ul > li:nth-child(5) { transition-delay: .16s; } .mnav > ul > li:nth-child(6) { transition-delay: .2s; }
 .mnav > ul > li > a { display: flex; justify-content: space-between; align-items: center; min-height: 64px; font-size: var(--fs-m); font-weight: 700; }
-.mnav .subl { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 20px; }
-.mnav .subl a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line-dark); color: var(--on-dark-sub); }
 .mnav .mcta { margin-top: auto; padding-top: 32px; display: grid; gap: 12px; }
 .mnav .mcta .btn { width: 100%; }
 .mnav .mcta p { color: var(--on-dark-sub); text-align: center; }
@@ -371,7 +369,10 @@ section { padding-block: var(--section); }
   .hero .acts .btn { flex: 1 1 auto; }
   .stats li { padding-right: 12px; }
   .stats li + li { padding-left: 12px; }
-  .rctl .rprog { display: none; }
+  /* phone: swipe the product cards; the arrows go away, the line shows how far you are */
+  .rctl { width: 100%; }
+  .rctl .rprog { display: block; flex: 1; margin-right: 0; }
+  .rctl .circ { display: none; }
   .rail { gap: 12px; }
   .rail > li { flex-basis: calc((100vw - var(--pad) - 12px) / 1.25); }
   .qgrid a { aspect-ratio: 4 / 3; }
@@ -480,7 +481,11 @@ section { padding-block: var(--section); }
   .lineart .illo { right: 12px; top: 12px; width: 88px; }
   .timeline li { grid-template-columns: minmax(0, 1fr); gap: 4px; padding: 24px 0 24px 40px; }
   .timeline li::before { top: 30px; }
-  .rev-grid { grid-template-columns: minmax(0, 1fr); }
+  /* phone: reviews become a sideways swipe, one card plus a peek of the next */
+  .rev-grid { display: flex; gap: 12px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; touch-action: pan-x pan-y; margin-inline: calc(-1 * var(--pad)); padding: 8px var(--pad) 24px; scroll-padding-inline: var(--pad); scrollbar-width: none; }
+  .rev-grid::-webkit-scrollbar { display: none; }
+  .rev-grid li { flex: 0 0 calc(100vw - 2 * var(--pad) - 32px); scroll-snap-align: start; }
+  .js .rev-grid li[data-up] { transform: none; }
   .rev-grid li { padding: 28px 24px; }
   .reviews .shead br { display: none; }
   .mq li { gap: 32px; padding: 24px 0 24px 32px; }
