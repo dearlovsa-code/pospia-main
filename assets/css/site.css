@@ -492,7 +492,23 @@ section { padding-block: var(--section); }
 /* =================== PRODUCT =================== */
 .pin-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: center; }
 .pin-grid > div { display: grid; gap: 16px; }
-.pin-grid figure img { width: 100%; height: auto; mix-blend-mode: multiply; }
+/* floating product icons (replaces the product line-up photo) */
+.float { position: relative; aspect-ratio: 3 / 2; }
+.float .orbit { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: var(--line); stroke-width: 1; overflow: visible; }
+.float .orbit circle { fill: var(--gold); stroke: none; }
+.fmark { position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 112px; height: 112px; border-radius: 50%; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line), 0 16px 40px rgba(47, 65, 82, .1); transform: translate(-50%, -50%); }
+.fmark img { width: 56px; height: auto; }
+.ftile { position: absolute; left: var(--x); top: var(--y); translate: -50% -50%; display: grid; justify-items: center; gap: 8px; width: 112px; padding: 16px 8px 12px; border-radius: 24px; background: rgba(251, 250, 247, .92); box-shadow: inset 0 0 0 1px var(--line), 0 12px 32px rgba(47, 65, 82, .1); color: var(--navy-deep); backdrop-filter: blur(6px); transition: background-color .3s, box-shadow .3s; }
+.ftile .fi { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--violet); transition: background-color .3s; }
+.ftile b { color: var(--ink); white-space: nowrap; }
+.ftile:hover { background: var(--paper); box-shadow: inset 0 0 0 1px var(--gold), 0 16px 40px rgba(47, 65, 82, .16); }
+.ftile:hover .fi { background: var(--gold); color: var(--ink); }
+@media (prefers-reduced-motion: no-preference) {
+  .ftile { animation: bob calc(5s + var(--d) * 2s) ease-in-out var(--t) infinite alternate; }
+  .float .orbit ellipse:last-of-type { transform-origin: 300px 200px; animation: spin 60s linear infinite; }
+}
+@keyframes bob { from { transform: translate(0, 0) rotate(-2deg); } to { transform: translate(calc(var(--d) * 6px), calc(var(--d) * -16px)) rotate(2deg); } }
+@keyframes spin { to { transform: rotate(340deg); } }
 .pitem { padding-block: clamp(80px, 8vw, 128px); }
 .pgrid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
 .pitem.rev .pimg { order: 2; }
@@ -522,6 +538,12 @@ section { padding-block: var(--section); }
   .points { grid-template-columns: minmax(0, 1fr); }
   .pimg figcaption { left: 20px; bottom: 16px; font-size: var(--fs-l); }
   .pclose br { display: none; }
+  .float { aspect-ratio: 1 / 1; margin-inline: -8px; }
+  .ftile { width: 96px; padding: 12px 4px 8px; border-radius: 20px; gap: 4px; }
+  .ftile .fi { width: 44px; height: 44px; border-radius: 12px; }
+  .ftile .fi .ico { width: 24px; height: 24px; }
+  .fmark { width: 80px; height: 80px; }
+  .fmark img { width: 40px; }
 }
 
 /* =================== PROCESS =================== */
