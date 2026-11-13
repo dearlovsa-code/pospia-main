@@ -85,18 +85,16 @@
   // ---- reveal on scroll, but only once the pictures inside are ready ----
   // (on a slow connection the animation used to play before the photo had arrived)
   const ready = img => img.complete && img.naturalWidth ? Promise.resolve() : new Promise(done => { img.addEventListener('load', done, { once: true }); img.addEventListener('error', done, { once: true }); });
-  const heroImg = $('#hero .slide.on img');
   const waitFor = el => {
     const imgs = [...el.querySelectorAll('img')];
-    if (heroImg && el.closest('#hero')) imgs.push(heroImg);
     if (!imgs.length) return Promise.resolve();
     imgs.forEach(i => { i.loading = 'eager'; });
-    return Promise.race([Promise.all(imgs.map(ready)), new Promise(done => setTimeout(done, 2500))]); // never wait more than 2.5s
+    return Promise.race([Promise.all(imgs.map(ready)), new Promise(done => setTimeout(done, 1200))]); // never wait more than 1.2s
   };
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return; io.unobserve(e.target);
     waitFor(e.target).then(() => requestAnimationFrame(() => e.target.classList.add('in')));
-    setTimeout(() => e.target.classList.add('in'), 2600); // in case animation frames are paused
+    setTimeout(() => e.target.classList.add('in'), 1300); // in case animation frames are paused
   }), { rootMargin: '0px 0px -8% 0px' });
   $$('[data-up], [data-clip], .split, [data-line]').forEach(el => io.observe(el));
   // start downloading pictures a little before they scroll into view
