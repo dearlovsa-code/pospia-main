@@ -3,3 +3,11 @@
 # Fonts are linked from the stylesheet without a stamp: if a font file ever changes, give it a new file name.
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
+# clean-up scripts for an old service worker: always re-check
+/sw.js
+  Cache-Control: no-cache
+/service-worker.js
+  Cache-Control: no-cache
+/serviceworker.js
+  Cache-Control: no-cache
