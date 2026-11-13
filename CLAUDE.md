@@ -65,7 +65,7 @@
 사업자: (주)포스피아 · 대표 나영균 · 142-81-83401 · 통신판매업 2021-용인기흥-0246 · 팩스 031-525-5202.
 
 ## 게시
-- **게시 완료(2026-11)**: https://pospia-main.pos-pia.workers.dev (Cloudflare 계정 pos-pia, Worker 이름 `pospia-main` = `wrangler.jsonc`의 name). GitHub `main`에 푸시하면 자동 배포.
+- **게시 완료(2026-11)**: https://택스리펀드.kr (= https://pospia-main.pos-pia.workers.dev) (Cloudflare 계정 pos-pia, Worker 이름 `pospia-main` = `wrangler.jsonc`의 name). GitHub `main`에 푸시하면 자동 배포.
   Cloudflare가 `/company.html`을 `/company`로 바꿔 보여 줌(307 이동, 정상). 검토용 변경은 `site-v1` 같은 브랜치에서 하고 사용자가 "사이트로 고" 하면 main에 합친다.
 - `.assetsignore`: src·scripts·미리보기·메모·설정은 공개하지 않음.
 
@@ -76,4 +76,7 @@
       높이 48px·휴대폰 36px, 최대 폭 220/160px) + 글자 Jumping Monster(로고 없음) · 좋은계란할인점 · (주)아담스푸드앤로지스틱스(로고 없음). 멘부리·LEEKAJA는 뺌.
 - [ ] 사진 원본(특히 첫 화면·제품 사진) 받으면 교체.
 - [x] Cloudflare 연결(검사 통과: 5페이지 PC·휴대폰 사진·글꼴·이동, 메모·원본·미리보기 파일 404).
-- [ ] 도메인 연결.
+- [x] 도메인 연결(2026-11): **택스리펀드.kr**(xn--hy1b74g1qjdlpr8c.kr)과 www를 메인 사이트에 연결.
+      후이즈 네임서버 → Cloudflare `dakota.ns.cloudflare.com`·`fatima.ns.cloudflare.com`(예전 qshop/AWS 값은 popia-home/CLAUDE.md에 있음).
+      Workers의 "Add Domain"은 한글 도메인을 거부("Internationalized Domain Names not supported") → **도메인(Zone) 화면 쪽 연결 창**에서 추가하니 됨(먼저 기존 A 기록을 지워야 함).
+      두 주소는 대시보드에서 붙인 Custom Domain이라 `wrangler.jsonc`에는 적지 않았다. 이 클라우드 환경은 한글 도메인을 허용 목록에 못 넣어(거부됨) 직접 열어 볼 수 없으니 확인은 사용자에게 부탁.
