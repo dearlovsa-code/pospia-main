@@ -65,7 +65,8 @@
 사업자: (주)포스피아 · 대표 나영균 · 142-81-83401 · 통신판매업 2021-용인기흥-0246 · 팩스 031-525-5202.
 
 ## 게시
-- Cloudflare Workers 프로젝트 `pospia-main`(아직 연결 전). 연결하면 main 푸시 때 자동 배포, 주소 https://pospia-main.pos-pia.workers.dev 예정.
+- **게시 완료(2026-11)**: https://pospia-main.pos-pia.workers.dev (Cloudflare 계정 pos-pia, Worker 이름 `pospia-main` = `wrangler.jsonc`의 name). GitHub `main`에 푸시하면 자동 배포.
+  Cloudflare가 `/company.html`을 `/company`로 바꿔 보여 줌(307 이동, 정상). 검토용 변경은 `site-v1` 같은 브랜치에서 하고 사용자가 "사이트로 고" 하면 main에 합친다.
 - `.assetsignore`: src·scripts·미리보기·메모·설정은 공개하지 않음.
 
 ## 확인 필요 / 남은 일
@@ -74,4 +75,5 @@
 - [x] 협력브랜드(2026-11 사용자 지정): 로고 7개(`assets/logo/partners/` 탕화쿵푸·TERA COFFEE·이루다제면소·응급실국물떡볶이·덮밥장사장[흰 로고→진한색]·Four Brothers·밥상천하[(주)천하에프엔비, 흰 글자→진한색, 초록 배지는 그대로],
       높이 48px·휴대폰 36px, 최대 폭 220/160px) + 글자 Jumping Monster(로고 없음) · 좋은계란할인점 · (주)아담스푸드앤로지스틱스(로고 없음). 멘부리·LEEKAJA는 뺌.
 - [ ] 사진 원본(특히 첫 화면·제품 사진) 받으면 교체.
-- [ ] Cloudflare 연결, 도메인 연결.
+- [x] Cloudflare 연결(검사 통과: 5페이지 PC·휴대폰 사진·글꼴·이동, 메모·원본·미리보기 파일 404).
+- [ ] 도메인 연결.
