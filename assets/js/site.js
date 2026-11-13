@@ -82,9 +82,31 @@
     $$('.w', el).forEach((w, i) => { w.style.transitionDelay = (parseFloat(el.dataset.dl || 0) + i * .06) + 's'; });
   });
 
-  // ---- reveal on scroll ----
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  // ---- reveal on scroll, but only once the pictures inside are ready ----
+  // (on a slow connection the animation used to play before the photo had arrived)
+  const ready = img => img.complete && img.naturalWidth ? Promise.resolve() : new Promise(done => { img.addEventListener('load', done, { once: true }); img.addEventListener('error', done, { once: true }); });
+  const heroImg = $('#hero .slide.on img');
+  const waitFor = el => {
+    const imgs = [...el.querySelectorAll('img')];
+    if (heroImg && el.closest('#hero')) imgs.push(heroImg);
+    if (!imgs.length) return Promise.resolve();
+    imgs.forEach(i => { i.loading = 'eager'; });
+    return Promise.race([Promise.all(imgs.map(ready)), new Promise(done => setTimeout(done, 2500))]); // never wait more than 2.5s
+  };
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return; io.unobserve(e.target);
+    waitFor(e.target).then(() => requestAnimationFrame(() => e.target.classList.add('in')));
+    setTimeout(() => e.target.classList.add('in'), 2600); // in case animation frames are paused
+  }), { rootMargin: '0px 0px -8% 0px' });
   $$('[data-up], [data-clip], .split, [data-line]').forEach(el => io.observe(el));
+  // start downloading pictures a little before they scroll into view
+  const pre = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.loading = 'eager'; pre.unobserve(e.target); } }), { rootMargin: '800px 0px 800px 0px' });
+  $$('img[loading="lazy"]').forEach(i => pre.observe(i));
+  // big background photos fade and zoom in only after they have loaded
+  $$('.subhero .bg img, .hero .slide img').forEach(img => {
+    const mark = () => img.classList.add('ld');
+    if (img.complete && img.naturalWidth) mark(); else { img.addEventListener('load', mark, { once: true }); img.addEventListener('error', mark, { once: true }); }
+  });
 
   // ---- count-up numbers ----
   const cio = new IntersectionObserver(es => es.forEach(e => {

@@ -35,6 +35,7 @@ const site = await readFile(path.join(ROOT, 'assets/js/site.js'), 'utf8');
   const pages = {};
   for (const page of Object.keys(PAGES)) {
     let s = await readFile(path.join(ROOT, page + '.html'), 'utf8');
+    s = s.replace(/(assets\/[^"?]+)\?v=[0-9a-f]+/g, '$1');
     s = s.replace(/<link rel="preload"[^>]*>\n/g, '');
     s = s.replace('<link rel="stylesheet" href="assets/css/site.css">', () => `<style>${tok(cssTok)}</style>`);
     s = await replaceAsync(s, /(src|href|content)="(assets\/[^"]+\.(?:jpg|png|webp))"/g, async (_, a, p) => `${a}="${tok(await dataUri(p))}"`);

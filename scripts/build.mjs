@@ -2,6 +2,7 @@
 // Each page starts with a comment:  <!-- title: ... | desc: ... | nav: company -->
 // After editing anything in src/, run:  node scripts/build.mjs   (it also rebuilds the preview files)
 import { readFile, writeFile, readdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -45,7 +46,18 @@ ${footer}
 </body>
 </html>
 `;
-  await writeFile(path.join(ROOT, file), html);
+  // every picture, style and script link gets ?v=<content hash>: browsers may keep these files for a year
+  // (see _headers) and still fetch the new copy the moment a file changes
+  const stamped = await (async () => {
+    const parts = []; let last = 0;
+    for (const m of html.matchAll(/(src|href|content)="(assets\/[^"?]+)"/g)) {
+      const buf = await readFile(path.join(ROOT, m[2]));
+      parts.push(html.slice(last, m.index), `${m[1]}="${m[2]}?v=${createHash('sha1').update(buf).digest('hex').slice(0, 8)}"`);
+      last = m.index + m[0].length;
+    }
+    return parts.join('') + html.slice(last);
+  })();
+  await writeFile(path.join(ROOT, file), stamped);
   console.log('built', file);
 }
 if (!process.argv.includes('--no-preview')) execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'build-preview.mjs')], { stdio: 'inherit' });

@@ -158,7 +158,9 @@ section { padding-block: var(--section); }
 /* ---------- sub page hero ---------- */
 .subhero { position: relative; display: flex; align-items: end; min-height: clamp(440px, 62svh, 640px); padding: calc(var(--hdr) + 48px) 0 clamp(48px, 6vw, 80px); background: var(--dark); color: var(--on-dark); overflow: hidden; }
 .subhero .bg { position: absolute; inset: 0; }
-.subhero .bg img { width: 100%; height: 100%; object-fit: cover; opacity: .5; transform: scale(1.08); animation: subzoom 6s var(--ease) forwards; }
+.subhero .bg img { width: 100%; height: 100%; object-fit: cover; opacity: .5; transform: scale(1.08); transition: opacity 1s ease; }
+.subhero .bg img.ld { animation: subzoom 6s var(--ease) forwards; }
+.js .subhero .bg img:not(.ld) { opacity: 0; }
 .subhero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28,27,25,.5), rgba(28,27,25,.2) 40%, rgba(28,27,25,.85)); }
 @keyframes subzoom { to { transform: scale(1); } }
 .subhero .wrap { position: relative; z-index: 1; width: 100%; display: flex; justify-content: space-between; align-items: end; gap: 24px; }
@@ -276,7 +278,8 @@ section { padding-block: var(--section); }
 .hero { position: relative; height: 100svh; min-height: 640px; max-height: 1080px; padding: 0; background: var(--dark); color: var(--on-dark); overflow: hidden; }
 .hero .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s ease; }
 .hero .slide.on { opacity: 1; }
-.hero .slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: transform 8s linear; filter: saturate(.85); }
+.hero .slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: transform 8s linear, opacity 1s ease; filter: saturate(.85); }
+.js .hero .slide img:not(.ld) { opacity: 0; }
 .hero .slide.on img { transform: scale(1); }
 .hero .slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(28,27,25,.82), rgba(28,27,25,.45) 60%, rgba(28,27,25,.3)), linear-gradient(0deg, rgba(28,27,25,.7), transparent 40%); }
 .hero figcaption { position: absolute; z-index: 2; right: var(--pad); top: calc(var(--hdr) + 24px); color: var(--on-dark-sub); opacity: 0; transition: opacity 1s .6s; }
