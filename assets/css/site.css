@@ -441,6 +441,7 @@ section { padding-block: var(--section); }
 .mq li::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
 .mq li.lg::after { margin-left: 0; }
 .mq li.lg img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+.mq li.lg img.wide { max-width: 300px; } /* very wide logos (TERA COFFEE) need more room to look the same size */
 @keyframes mq { to { transform: translateX(-100%); } }
 
 .one-head { display: grid; justify-items: center; gap: 16px; text-align: center; margin-bottom: 64px; }
@@ -492,6 +493,7 @@ section { padding-block: var(--section); }
   .reviews .shead br { display: none; }
   .mq li { gap: 32px; padding: 24px 0 24px 32px; }
   .mq li.lg img { height: 36px; max-width: 160px; }
+  .mq li.lg img.wide { max-width: 220px; }
   .loc-card { padding: 24px; }
   .loc-card dl div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .loc-card .acts .btn { flex: 1 1 auto; }
