@@ -59,6 +59,7 @@
 이 클라우드 환경에서 Node로 인터넷에 접속할 때는 `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt`, 카페24는 브라우저 User-Agent가 있어야 열린다.
 
 ## 연락처 (사이트에 쓰는 값)
+네이버 스마트스토어(사용자 제공): https://mkt.shopping.naver.com/link/6a76d6a0b7f4a416fb26b162 — 제품소개 각 제품의 "스마트스토어에서 보기"(포스·키오스크·카드단말기는 상품 링크 6af52a485ebe321338762e90·6af52a48f9469e3e1501858d·6aaa2e817a192905d5e98514, 테이블오더·인터넷/CCTV는 스토어 링크), 마무리 띠 버튼, 바닥글 바로가기에 연결. 맨 위 메뉴에는 넣지 않음.
 고객센터 1577-7107(평일 09:30–18:30) · pos-pia@naver.com · (16977) 경기도 용인시 기흥구 강남로 7, 아트프라자 901호 ·
 카카오 http://pf.kakao.com/_KFGBn/chat · 블로그 https://blog.naver.com/pos-pia · 유튜브 @포스피아-l.
 사업자: (주)포스피아 · 대표 나영균 · 142-81-83401 · 통신판매업 2021-용인기흥-0246 · 팩스 031-525-5202.
