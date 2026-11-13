@@ -60,6 +60,7 @@ b, strong { font-weight: 700; }
 section { padding-block: var(--section); }
 .skip { position: absolute; left: 16px; top: -64px; z-index: 100; padding: 12px 16px; background: var(--gold); color: var(--ink); border-radius: 8px; font-weight: 700; }
 .skip:focus { top: 16px; }
+[hidden] { display: none !important; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* type roles */
@@ -548,6 +549,8 @@ section { padding-block: var(--section); }
 .vsteps::before, .vsteps::after { content: ""; position: absolute; left: 31px; top: 40px; bottom: 40px; width: 1px; background: var(--line-dark); }
 .vsteps::after { background: var(--gold); transform-origin: top; transform: scaleY(0); transition: transform 2.4s var(--ease) .3s; }
 .vsteps.in::after { transform: scaleY(1); }
+.vsteps::before, .vsteps::after, .steps::before, .steps::after, .timeline::before, .timeline::after { z-index: 0; }
+.vsteps li, .steps li, .timeline li { z-index: 1; } /* rows (and their circles) sit above the connecting line */
 .vsteps li { position: relative; display: grid; grid-template-columns: 64px 32px minmax(0, 1fr); gap: 24px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--line-dark); }
 .vsteps .vn { position: relative; z-index: 1; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--dark); box-shadow: inset 0 0 0 1px var(--line-dark); font-family: var(--serif); font-size: var(--fs-m); letter-spacing: 0; color: var(--gold); }
 .vsteps .ico { color: var(--on-dark-sub); }

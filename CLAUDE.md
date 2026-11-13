@@ -9,7 +9,7 @@
 - **원본은 `src/`**: `src/pages/*.html`(페이지 본문) + `src/partials/`(header·footer·icons 공통 부분).
   루트의 `index.html`·`company.html`·`product.html`·`process.html`·`notice.html`은 **만들어진 결과물** — 손으로 고치지 않는다.
   `src/`를 고친 뒤에는 반드시 `node scripts/build.mjs` (페이지 + 미리보기를 함께 다시 만든다).
-  각 페이지 첫 줄 주석 `<!-- title: … | desc: … | nav: company -->`가 제목·설명·현재 메뉴 표시.
+  각 페이지 첫 줄 주석 `<!-- title: … | desc: … | nav: company -->`가 제목·설명·현재 메뉴 표시(`|`는 구분 기호라 제목·설명 안에는 쓰지 말 것, 대신 `–`).
 - `assets/css/site.css`: 전체 스타일(공통 → HOME → COMPANY → PRODUCT → PROCESS → NOTICE 순).
 - `assets/js/site.js`: 동작 전체. `assets/js/lenis.min.js`: 부드러운 스크롤(MIT).
 - `assets/img/`: 사진(**WebP**). `prod-*`·`proc-*`·`banner-*`·`hero-desk`는 카페24 사이트 이미지에서 글자 없는 부분만 잘라 낸 것(가로 1000px 이하라 원본을 받으면 교체 권장).
@@ -17,15 +17,15 @@
 - `assets/news/`: 홈 "Cases" 카드 썸네일. **자동 생성물, 손으로 고치지 않는다.**
 - `assets/fonts/`: Pretendard 서브셋(400·700, KS X 1001 2350자, OFL) + Italiana(영문 제목 전용, latin, OFL).
 - `assets/logo/`: 마크·워드마크(흰색=어두운 바탕, 남색=밝은 바탕).
-- `미리보기/1-홈.html` … `5-공지사항.html`: 글꼴·사진·스크립트를 모두 넣은 확인용 파일(서로 링크됨, 같은 폴더에 두고 열기).
-  사용자에게는 SendUserFile `display: attach`로 보낸다.
+- `미리보기-전체.html`: 5개 페이지 + 글꼴·사진·스크립트를 **한 파일**에 넣은 확인용 파일(메뉴를 누르면 파일 안에서 페이지가 바뀜).
+  사용자 요청으로 이 한 파일만 SendUserFile `display: attach`로 보낸다.
 - `scripts/update-news.mjs`: 블로그 "포스피아 설치사례"(categoryNo=1) 최신 8개로 홈 Cases 카드를 다시 만든다
   (`src/pages/index.html`의 `<!-- NEWS:START -->`~`<!-- NEWS:END -->`만 바꾸고 build 실행).
 - `.github/workflows/update-news.yml`: 위 스크립트를 6시간마다 실행, 바뀐 게 있을 때만 커밋.
 
 ## 메뉴 (사용자가 정함)
 회사소개 · 제품소개 · TAX REFUND(→ taxrefund 사이트, 새 창) · 설치사례(→ 블로그 설치사례 카테고리, 새 창) · 가입절차 · 공지사항.
-"제품영상" 메뉴는 빼기로 함(유튜브는 바닥글 링크만). 카페24의 회원가입·로그인·장바구니·쇼핑 기능은 없음.
+"제품영상" 메뉴는 빼기로 함, 바닥글 유튜브 링크도 사용자 요청으로 삭제. 카페24의 회원가입·로그인·장바구니·쇼핑 기능은 없음.
 레퍼런스: https://ktlea.co.kr (방식만 참고 — 협회소개→회사소개, 전통주소개→제품소개, 뉴스→공지사항). 문구·사진·코드는 가져오지 않는다.
 
 ## 디자인 규칙
@@ -46,14 +46,15 @@
 - 회사소개: 인사말(본문 두 문단은 왼쪽 문단 자리에 위아래로) → 포스피아는(제목·설명 + 3×2 선 그림 표: 얇은 고리+장비 그림, 왼쪽 아래 "( 포스기 ) POS") → 연혁(2010→2026 오름차순, 스크롤하면 선이 채워짐) → 고객후기 4 → 협력브랜드(흐르는 글자) → 원스톱 관리 3 → 오시는 길.
 - 제품소개: 소개 + 6개 제품(사진·설명·POINT 2개, 좌우 번갈아) → 마무리 띠.
 - 가입절차: 가입 5단계(선이 이어지는 효과) → 카드사 개설 5단계 → 필요 서류 9개 + 추가 서류 2칸(법인사업자: 법인등기부등본·인감증명서·주주명부, 법인 서류는 발급 3개월 이내 / 외국인 대표자: 신분증 사본 앞·뒷면·여권 사진) → 고객센터.
-- 공지사항: 검색 + 펼쳐 보기 목록. 공지 추가는 `src/pages/notice.html`의 안내 주석대로, 홈의 Notice 3줄도 함께 바꾼다.
+- 공지사항: 검색 + 목록(처음엔 모두 닫혀 있고 제목을 눌러야 내용이 펼쳐짐 — `[hidden]{display:none!important}` 지우지 말 것). 공지 추가는 `src/pages/notice.html`의 안내 주석대로, 홈의 Notice 3줄도 함께 바꾼다.
+- 단계 선(가입·카드사 개설·연혁)은 번호 원 **뒤로** 지나간다(줄은 z-index 0, 항목은 1).
 - 부드러운 스크롤 안전장치(화면 신호가 없거나 첫 휠에 안 움직이면 기본 스크롤)는 지우지 말 것.
 
 ## 수정 후 확인 순서
 1. `node scripts/build.mjs` → `python3 -m http.server 8090` (pospia-main에서).
 2. Playwright로 5개 페이지 × 1440·1024·768·390 폭: 글자 크기 4종·굵기 2종, 가로 넘침 0, 대비, 휴대폰 터치 44px.
 3. 동작: 휠·탭 이동(requestAnimationFrame을 막은 경우 포함), 슬라이드, 휴대폰 메뉴, 헤더 숨김/표시, 공지 검색·펼침.
-4. 미리보기 5개 파일을 다른 폴더에 두고 열어 글꼴·사진·페이지 간 링크 확인.
+4. `미리보기-전체.html`을 다른 폴더에 혼자 두고 열어 글꼴(3개 loaded)·사진·메뉴로 페이지 이동 확인.
 5. 캡처를 보여 주고 커밋·푸시.
 이 클라우드 환경에서 Node로 인터넷에 접속할 때는 `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt`, 카페24는 브라우저 User-Agent가 있어야 열린다.
 

@@ -27,7 +27,7 @@ jobs:
       - run: node scripts/update-news.mjs
       - name: Commit if the cards changed
         run: |
-          git add -A src/pages/index.html index.html assets/news 미리보기
+          git add -A src/pages/index.html index.html assets/news 미리보기-전체.html
           if git diff --cached --quiet; then
             echo "no new posts"
             exit 0
