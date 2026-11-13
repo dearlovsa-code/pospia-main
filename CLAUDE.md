@@ -74,6 +74,9 @@
 - **게시 완료(2026-11)**: https://택스리펀드.kr (= https://pospia-main.pos-pia.workers.dev) (Cloudflare 계정 pos-pia, Worker 이름 `pospia-main` = `wrangler.jsonc`의 name). GitHub `main`에 푸시하면 자동 배포.
   Cloudflare가 `/company.html`을 `/company`로 바꿔 보여 줌(307 이동, 정상). 검토용 변경은 `site-v1` 같은 브랜치에서 하고 사용자가 "사이트로 고" 하면 main에 합친다.
 - `.assetsignore`: src·scripts·미리보기·메모·설정은 공개하지 않음.
+- **예전 qshop 주소 정리(2026-11)**: 없는 주소(예전 쇼핑몰 페이지 등)는 `404.html`("홈페이지가 새로워졌어요", 3초 뒤 홈으로)로 보냄 — `wrangler.jsonc`의 `not_found_handling: "404-page"`.
+  예전 사이트가 남긴 서비스워커를 지우는 `sw.js`·`service-worker.js`·`serviceworker.js`(내용 같음, `_headers`로 no-cache)를 둔다. 지우지 말 것.
+  크롬에 예전 화면이 남으면: chrome://settings/content/all 에서 사이트 데이터 삭제(운영가이드에 적음).
 - **로딩 속도(2026-11)**: `build.mjs`가 모든 `assets/` 링크에 `?v=내용해시`를 붙이고, `_headers`가 `/assets/*`를 1년 캐시(immutable)로 지정 →
   다시 방문하면 사진·글꼴을 다시 받지 않음. 글꼴은 CSS에서 해시 없이 불러오므로 글꼴 파일을 바꿀 땐 **파일 이름을 바꿀 것**.
   `site.js`: 나타나는 효과는 안의 사진이 다 받아진 뒤 시작(최대 2.5초 대기), 사진은 화면 800px 앞에서 미리 받기, 큰 배경 사진은 받아진 뒤 서서히 나타남(`.ld`).
