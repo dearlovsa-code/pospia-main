@@ -161,6 +161,7 @@ section { padding-block: var(--section); }
 .subhero .bg img { width: 100%; height: 100%; object-fit: cover; opacity: .5; transform: scale(1.08); transition: opacity .5s ease; }
 .subhero .bg img.ld { animation: subzoom 6s var(--ease) forwards; }
 .subhero .bg.mc img { opacity: .8; }
+@media (max-width: 680px) { .hero .slide.mc.tp img { height: 64%; object-position: 50% 60%; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); } .hero .slide.mc.tp { background: #0a101e; } .hero .slide.mc.tp::after { background: linear-gradient(0deg, rgba(10,16,30,.95) 0%, rgba(10,16,30,.8) 45%, rgba(10,16,30,.1) 75%); } }
 @media (max-width: 680px) { .hero .slide.mc::after { background: linear-gradient(0deg, rgba(10,16,30,.92) 0%, rgba(10,16,30,.75) 55%, rgba(10,16,30,.25) 100%); } }
 .js .subhero .bg img:not(.ld) { opacity: 0; }
 .subhero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28,27,25,.5), rgba(28,27,25,.2) 40%, rgba(28,27,25,.85)); }
