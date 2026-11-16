@@ -3,8 +3,8 @@
    Four sizes only: --fs-xl (English display), --fs-l (Korean headings), --fs-m, --fs-s (16px body).
    Spacing in multiples of 4. Controls 40 / 48 / 56px. Icons 16 / 24 / 32px. */
 
-@font-face { font-family: "Pretendard"; font-weight: 400; font-display: swap; src: url(../fonts/Pretendard-Regular.a1bd75e3.woff2) format("woff2"); }
-@font-face { font-family: "Pretendard"; font-weight: 700; font-display: swap; src: url(../fonts/Pretendard-Bold.21baddef.woff2) format("woff2"); }
+@font-face { font-family: "Pretendard"; font-weight: 400; font-display: swap; src: url(../fonts/Pretendard-Regular.a561602a.woff2) format("woff2"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; font-display: swap; src: url(../fonts/Pretendard-Bold.622d26f6.woff2) format("woff2"); }
 @font-face { font-family: "Italiana"; font-weight: 400; font-display: swap; src: url(../fonts/Italiana-Regular.latin.woff2) format("woff2"); }
 
 :root {
