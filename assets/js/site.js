@@ -42,11 +42,13 @@
   const onScroll = () => {
     const y = scrollY, d = y - lastY; lastY = y;
     const solid = y > 40;
+    if (hdr) {
     hdr.classList.toggle('solid', solid && !hdr.classList.contains('open'));
     document.body.classList.toggle('has-solid', solid);
     const away = y > 480 && d > 4 && !hdr.classList.contains('open');
     if (away) hdr.classList.add('away'); else if (d < -4 || y < 480) hdr.classList.remove('away');
     document.body.classList.toggle('hdr-away', hdr.classList.contains('away'));
+    }
     const show = y > innerHeight * .8;
     totop && totop.classList.toggle('show', show);
     kakao && kakao.classList.toggle('lift', show);
