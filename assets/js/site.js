@@ -241,6 +241,53 @@
     });
   }
 
+  // ---- home: estimate popup (PC) / bottom bar (phone), hidden for the rest of the day when asked ----
+  const pop = $('#est-pop'), bar = $('#est-bar'), form = $('#est-form');
+  if (pop && form) {
+    const KEY = 'pospia-est-hide', today = new Date().toISOString().slice(0, 10);
+    const hiddenToday = () => { try { return localStorage.getItem(KEY) === today; } catch (_) { return false; } };
+    const home = form.parentNode, slot = document.createElement('div');
+    slot.className = 'est-slot';
+    let lastFocus = null, isOpen = false;
+    const open = () => {
+      if (isOpen) return; isOpen = true; lastFocus = document.activeElement;
+      home.insertBefore(slot, form); $('#pop-body').appendChild(form); form.classList.add('in');
+      pop.hidden = false; root.classList.add('pop-open'); lenis && lenis.stop();
+      requestAnimationFrame(() => pop.classList.add('on'));
+      if (bar) bar.classList.remove('on');
+      setTimeout(() => $('.pop-x', pop).focus(), 50);
+    };
+    const close = () => {
+      if (!isOpen) return; isOpen = false; pop.classList.remove('on');
+      setTimeout(() => {
+        pop.hidden = true; home.insertBefore(form, slot); slot.remove();
+        root.classList.remove('pop-open'); lenis && lenis.start();
+        if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+      }, 350);
+    };
+    const hideToday = () => { try { localStorage.setItem(KEY, today); } catch (_) {} if (bar) { bar.classList.remove('on'); setTimeout(() => { bar.hidden = true; }, 500); } close(); };
+    $$('[data-pop-close]', pop).forEach(b => b.addEventListener('click', close));
+    $$('[data-pop-today]').forEach(b => b.addEventListener('click', hideToday));
+    $$('[data-pop-open]').forEach(b => b.addEventListener('click', open));
+    document.addEventListener('keydown', e => {
+      if (!isOpen) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'Tab') { // keep focus inside the popup
+        const f = $$('button, input, textarea, summary, a[href]', pop).filter(el => el.offsetParent !== null);
+        if (!f.length) return;
+        if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+        else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+      }
+    });
+    const est = $('#estimate');
+    const nearForm = () => { const r = est.getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0; };
+    if (!hiddenToday()) setTimeout(() => {
+      if (form.classList.contains('sent') || nearForm()) return; // already looking at (or done with) the form
+      if (matchMedia('(max-width: 680px)').matches) { if (bar) { bar.hidden = false; requestAnimationFrame(() => bar.classList.add('on')); } }
+      else open();
+    }, 2500);
+  }
+
   // ---- current year in the footer ----
   $$('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
 })();
