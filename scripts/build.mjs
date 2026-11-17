@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const part = async n => (await readFile(path.join(ROOT, 'src/partials', n + '.html'), 'utf8')).trim();
-const [icons, header, footer] = await Promise.all(['icons', 'header', 'footer'].map(part));
+const [icons, header, footer, lpHeader, lpFooter] = await Promise.all(['icons', 'header', 'footer', 'header-landing', 'footer-landing'].map(part));
 const built = [];
 
 for (const file of (await readdir(path.join(ROOT, 'src/pages'))).filter(f => f.endsWith('.html'))) {
@@ -18,7 +18,8 @@ for (const file of (await readdir(path.join(ROOT, 'src/pages'))).filter(f => f.e
   if (!m) throw new Error(file + ': missing <!-- title: ... --> line');
   const meta = Object.fromEntries(m[1].split('|').map(s => s.trim().split(/:\s*/)).map(([k, ...v]) => [k, v.join(':').trim()]));
   src = src.slice(m[0].length);
-  const hdr = header.replace(new RegExp(`<li data-nav="${meta.nav}">`), `<li data-nav="${meta.nav}" class="cur">`);
+  const landing = meta.layout === 'landing'; // ad landing pages: logo + one consult button, no menu, slim footer
+  const hdr = landing ? lpHeader : header.replace(new RegExp(`<li data-nav="${meta.nav}">`), `<li data-nav="${meta.nav}" class="cur">`);
   const html = `<!doctype html>
 <html lang="ko">
 <head>
@@ -43,7 +44,7 @@ ${hdr}
 <main id="main">
 ${src.trim()}
 </main>
-${footer}
+${landing ? lpFooter : footer}
 </body>
 </html>
 `;
