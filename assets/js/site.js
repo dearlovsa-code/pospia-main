@@ -199,6 +199,40 @@
     else { const a = body.animate([{ height: body.scrollHeight + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 350, easing: 'cubic-bezier(.16,1,.3,1)' }); a.onfinish = () => { body.hidden = true; }; }
   }));
 
+  // ---- home: free estimate form -> Google Form (answers go to the linked Google Sheet) ----
+  const est = $('#est-form');
+  if (est) {
+    const err = $('.ferr', est), btn = $('.submit', est), done = $('.fdone', est);
+    const markSets = () => $$('.fset', est).forEach(fs => {
+      const r = $$('input[type=radio]', fs);
+      fs.classList.toggle('bad', r.length > 0 && !r.some(i => i.checked));
+    });
+    const finish = () => { est.classList.add('sent'); done.hidden = false; est.scrollIntoView({ block: 'center', behavior: 'smooth' }); };
+    est.addEventListener('change', () => { if (est.classList.contains('tried')) { markSets(); err.hidden = est.checkValidity(); } });
+    est.addEventListener('submit', async e => {
+      e.preventDefault();
+      est.classList.add('tried'); markSets();
+      if (!est.checkValidity()) {
+        err.hidden = false;
+        const first = $('input:invalid, textarea:invalid', est);
+        if (first) { first.closest('.fset, .fld, .agree').scrollIntoView({ block: 'center', behavior: 'smooth' }); first.focus({ preventScroll: true }); }
+        return;
+      }
+      err.hidden = true;
+      if (est.elements.website.value) { finish(); return; } // a bot filled the hidden field: pretend success, send nothing
+      const data = new URLSearchParams();
+      new FormData(est).forEach((v, k) => { if (k.startsWith('entry.')) data.append(k, String(v).trim()); });
+      btn.disabled = true;
+      try {
+        await fetch(est.action, { method: 'POST', mode: 'no-cors', body: data });
+        finish();
+      } catch (_) {
+        err.textContent = '전송에 실패했습니다. 잠시 후 다시 시도하시거나 1577-7107로 연락주세요.';
+        err.hidden = false; btn.disabled = false;
+      }
+    });
+  }
+
   // ---- current year in the footer ----
   $$('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
 })();
