@@ -449,13 +449,14 @@ section { padding-block: var(--section); }
 .pop-today:hover, .pop-close:hover { color: var(--navy); }
 .est-slot { min-height: 240px; }
 html.pop-open, html.pop-open body { overflow: hidden; }
-.est-bar { position: fixed; left: 16px; right: 80px; bottom: 16px; z-index: 41; display: flex; align-items: stretch; border-radius: 999px; background: var(--navy-deep); color: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, .22); transform: translateY(calc(100% + 24px)); transition: transform .5s var(--ease); }
+.est-bar { position: fixed; left: 16px; right: 16px; top: calc(var(--hdr) + 8px); z-index: 49; display: flex; align-items: stretch; border-radius: 999px; background: var(--gold); color: var(--ink); box-shadow: 0 8px 24px rgba(0, 0, 0, .22); transform: translateY(calc(-100% - var(--hdr) - 16px)); transition: transform .5s var(--ease), top .5s var(--ease); }
+html:has(.site-hdr.away) .est-bar { top: 8px; }
 .est-bar[hidden] { display: none; }
 .est-bar.on { transform: none; }
-.bar-go { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 48px; padding: 0 8px 0 20px; border: 0; background: none; color: inherit; text-align: left; cursor: pointer; }
-.bar-go span { color: rgba(255, 255, 255, .78); }
-.bar-go b { color: var(--gold); margin-right: 4px; }
-.bar-x { flex: none; display: grid; place-items: center; width: 48px; min-height: 48px; border: 0; border-left: 1px solid rgba(255, 255, 255, .16); background: none; color: inherit; cursor: pointer; }
+.bar-go { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 12px 0 20px; border: 0; background: none; color: inherit; white-space: nowrap; cursor: pointer; }
+.bar-go span { color: var(--navy-deep); }
+.bar-go b { color: var(--ink); }
+.bar-x { flex: none; display: grid; place-items: center; width: 48px; min-height: 48px; border: 0; border-left: 1px solid rgba(34, 32, 30, .16); background: none; color: inherit; cursor: pointer; }
 .bar-x .ico { transform: rotate(45deg); }
 @media (max-width: 680px) {
   .est-pop { padding: 0; place-items: end stretch; }
