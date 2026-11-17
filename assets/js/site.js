@@ -118,7 +118,13 @@
     requestAnimationFrame(step);
     setTimeout(() => { el.textContent = fmt(end); }, dur + 200); // in case animation frames are paused
   }), { threshold: .4 });
-  $$('[data-count]').forEach(el => cio.observe(el));
+  // keep each number's box at its final width so the words after it don't jiggle while it counts up
+  $$('[data-count]').forEach(el => {
+    el.textContent = (+el.dataset.count).toLocaleString('ko-KR');
+    el.style.display = 'inline-block'; el.style.fontVariantNumeric = 'tabular-nums'; el.style.textAlign = 'right';
+    el.style.minWidth = el.getBoundingClientRect().width + 'px';
+    cio.observe(el);
+  });
 
   // ---- home hero slider ----
   const hero = $('#hero');
