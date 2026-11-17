@@ -285,7 +285,7 @@
       if (form.classList.contains('sent') || nearForm()) return; // already looking at (or done with) the form
       if (matchMedia('(max-width: 680px)').matches) { if (bar) { bar.hidden = false; requestAnimationFrame(() => bar.classList.add('on')); } }
       else open();
-    }, 2500);
+    }, 1000);
   }
 
   // ---- current year in the footer ----
