@@ -321,8 +321,14 @@
       e.preventDefault(); pmf.classList.add('tried'); checkOne(); mark();
       if (!pmf.checkValidity()) { err.hidden = false; const f = $('input:invalid', pmf); if (f) { f.closest('.fset, .fld, .agree').scrollIntoView({ block: 'center', behavior: 'smooth' }); f.focus({ preventScroll: true }); } return; }
       err.hidden = true;
-      // TODO: connect to the chosen destination (Google Form / Sheet etc.). Until then nothing is sent.
-      pmf.classList.add('sent'); done.hidden = false; pmf.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      // answers go to the user's Google Sheet through its Apps Script web app (scripts/promo-apps-script.gs)
+      const finish = () => { pmf.classList.add('sent'); done.hidden = false; pmf.scrollIntoView({ block: 'center', behavior: 'smooth' }); };
+      if (pmf.elements.website.value) { finish(); return; } // a bot filled the hidden field
+      const data = new URLSearchParams(new FormData(pmf)); data.delete('agree'); data.append('page', location.pathname || 'promo');
+      const btn = $('.submit', pmf); btn.disabled = true;
+      fetch(pmf.action, { method: 'POST', mode: 'no-cors', body: data })
+        .then(finish)
+        .catch(() => { err.textContent = '전송에 실패했습니다. 잠시 후 다시 시도하시거나 1577-7107로 연락주세요.'; err.hidden = false; btn.disabled = false; });
     });
     const sticky = $('.pm-sticky'), fsec = $('#pm-form');
     if (sticky && fsec) new IntersectionObserver(es => es.forEach(x => sticky.classList.toggle('hide', x.isIntersecting)), { threshold: .05 }).observe(fsec);
