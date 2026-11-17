@@ -203,12 +203,20 @@
   const est = $('#est-form');
   if (est) {
     const err = $('.ferr', est), btn = $('.submit', est), done = $('.fdone', est);
+    // device cards are checkboxes: at least one must be ticked
+    const needOne = $$('[data-need-one]', est);
+    const checkOne = () => needOne.forEach(g => {
+      const c = $$('input[type=checkbox]', g), ok = c.some(i => i.checked);
+      c.forEach(i => i.setCustomValidity(''));
+      if (!ok && c[0]) c[0].setCustomValidity('희망 기기를 하나 이상 선택해주세요.');
+    });
+    checkOne();
     const markSets = () => $$('.fset', est).forEach(fs => {
-      const r = $$('input[type=radio]', fs);
+      const r = $$('input[type=radio], input[type=checkbox]', fs);
       fs.classList.toggle('bad', r.length > 0 && !r.some(i => i.checked));
     });
     const finish = () => { est.classList.add('sent'); done.hidden = false; est.scrollIntoView({ block: 'center', behavior: 'smooth' }); };
-    est.addEventListener('change', () => { if (est.classList.contains('tried')) { markSets(); err.hidden = est.checkValidity(); } });
+    est.addEventListener('change', () => { checkOne(); if (est.classList.contains('tried')) { markSets(); err.hidden = est.checkValidity(); } });
     est.addEventListener('submit', async e => {
       e.preventDefault();
       est.classList.add('tried'); markSets();
