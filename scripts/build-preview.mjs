@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const PAGES = { index: '1-홈', company: '2-회사소개', product: '3-제품소개', process: '4-가입절차', notice: '5-공지사항' };
+const PAGES = { index: '1-홈', company: '2-회사소개', product: '3-제품소개', process: '4-가입절차', notice: '5-공지사항', promo: '6-프로모션' };
 const TYPES = { woff2: 'font/woff2', jpg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
 const cache = new Map();
 const dataUri = async rel => {
@@ -46,7 +46,7 @@ const site = await readFile(path.join(ROOT, 'assets/js/site.js'), 'utf8');
     pages[page] = s;
   }
   const json = JSON.stringify({ assets, pages }).replace(/<\//g, '<\\/');
-  const shell = `<!doctype html>
+  const shellFor = start => `<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>포스피아 메인 사이트 미리보기</title>
 <style>html,body{margin:0;height:100%;background:#1c1b19}iframe{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}</style>
@@ -65,7 +65,7 @@ const site = await readFile(path.join(ROOT, 'assets/js/site.js'), 'utf8');
       if (hash) setTimeout(() => { const t = d.getElementById(hash); if (t) t.scrollIntoView(); }, 300);
       d.addEventListener('click', e => {
         const a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
-        const m = a.getAttribute('href').match(/^(index|company|product|process|notice)\\.html(?:#(.*))?$/);
+        const m = a.getAttribute('href').match(/^(index|company|product|process|notice|promo)\\.html(?:#(.*))?$/);
         if (m) { e.preventDefault(); go(m[1], m[2] || ''); }
         else if (/^https?:|^mailto:|^tel:/.test(a.getAttribute('href'))) { e.preventDefault(); window.open(a.href, a.target === '_blank' ? '_blank' : '_top'); }
       });
@@ -73,11 +73,13 @@ const site = await readFile(path.join(ROOT, 'assets/js/site.js'), 'utf8');
     v.srcdoc = html(name);
     document.title = (D.pages[name].match(/<title>([^<]*)/) || [, ''])[1] + ' (미리보기)';
   };
-  go('index', '');
+  go('${start}', '');
 })();
 </script>
 </body></html>
 `;
+  const shell = shellFor('index');
   await writeFile(path.join(ROOT, '미리보기-전체.html'), shell);
+  await writeFile(path.join(ROOT, '미리보기-프로모션.html'), shellFor('promo')); // the landing page is not in the menu, so it gets its own entry file
   console.log('preview rebuilt: 미리보기-전체.html', (shell.length / 1048576).toFixed(1) + 'MB');
 }

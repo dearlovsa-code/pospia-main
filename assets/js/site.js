@@ -288,6 +288,44 @@
     }, 1000);
   }
 
+  // ---- promo landing: pick a set, carry it into the form; consultation form ----
+  const combo = $('.combo-box');
+  if (combo) {
+    const picks = $$('[data-pick]', combo), sel = $('#combo-sel'), msg = $('#combo-msg');
+    const syncForm = () => {
+      const on = picks.filter(i => i.checked).map(i => i.value);
+      $$('[data-sync]').forEach(c => { c.checked = on.includes(c.dataset.sync); c.dispatchEvent(new Event('change', { bubbles: true })); });
+    };
+    const show = () => {
+      const on = picks.filter(i => i.checked).map(i => i.value);
+      combo.classList.toggle('all', on.length === picks.length);
+      sel.textContent = on.length ? on.join(' + ') : '위에서 상품을 골라 보세요';
+      msg.innerHTML = on.length === picks.length ? '네 가지 모두 함께! <b>지원금 최대 60만원</b> 대상이에요'
+        : on.length ? (on.length === 1 ? '단품으로도 신청할 수 있어요. ' : '이 조합으로 신청할 수 있어요. ') + '함께하는 상품이 많을수록 혜택이 커져요'
+        : '네 가지를 모두 함께하면 <b>지원금 최대 60만원</b>';
+    };
+    picks.forEach(i => i.addEventListener('change', show));
+    $('#combo-go').addEventListener('click', syncForm);
+  }
+  const pmf = $('#pm-form-el');
+  if (pmf) {
+    const err = $('.ferr', pmf), done = $('.fdone', pmf);
+    const need = $$('[data-need-one]', pmf);
+    const checkOne = () => need.forEach(g => { const c = $$('input[type=checkbox]', g); c.forEach(i => i.setCustomValidity('')); if (!c.some(i => i.checked) && c[0]) c[0].setCustomValidity('상품을 하나 이상 선택해주세요.'); });
+    const mark = () => $$('.fset', pmf).forEach(fs => { const g = $('[data-need-one]', fs); if (g) fs.classList.toggle('bad', !$$('input', g).some(i => i.checked)); });
+    checkOne();
+    pmf.addEventListener('change', () => { checkOne(); if (pmf.classList.contains('tried')) { mark(); err.hidden = pmf.checkValidity(); } });
+    pmf.addEventListener('submit', e => {
+      e.preventDefault(); pmf.classList.add('tried'); checkOne(); mark();
+      if (!pmf.checkValidity()) { err.hidden = false; const f = $('input:invalid', pmf); if (f) { f.closest('.fset, .fld, .agree').scrollIntoView({ block: 'center', behavior: 'smooth' }); f.focus({ preventScroll: true }); } return; }
+      err.hidden = true;
+      // TODO: connect to the chosen destination (Google Form / Sheet etc.). Until then nothing is sent.
+      pmf.classList.add('sent'); done.hidden = false; pmf.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
+    const sticky = $('.pm-sticky'), fsec = $('#pm-form');
+    if (sticky && fsec) new IntersectionObserver(es => es.forEach(x => sticky.classList.toggle('hide', x.isIntersecting)), { threshold: .05 }).observe(fsec);
+  }
+
   // ---- current year in the footer ----
   $$('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
 })();
