@@ -4,6 +4,32 @@
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const root = document.documentElement;
 
+  // ---- where did this visitor come from? (sent with every form so the sheet shows which ad / QR / search worked) ----
+  // Tag links like  ...?from=qr  or  ...?utm_source=naver&utm_campaign=promo . Without a tag we read the page they came from.
+  // The last known source is kept for 30 days in this browser, so it survives moving between pages.
+  const SOURCE = (() => {
+    const KEY = 'pospia-src', DAY = 864e5;
+    const fromUrl = () => {
+      const q = new URLSearchParams(location.search);
+      const v = (q.get('from') || q.get('utm_source') || '').trim();
+      if (v) return (v + (q.get('utm_campaign') ? ' / ' + q.get('utm_campaign') : '')).slice(0, 80);
+      let h = '';
+      try { h = new URL(document.referrer).hostname; } catch (_) { return ''; }
+      if (!h || h === location.hostname) return '';
+      const known = [[/search\.naver\.com$/, '네이버 검색'], [/blog\.naver\.com$/, '네이버 블로그'], [/(^|\.)naver\.com$/, '네이버'],
+        [/google\./, '구글 검색'], [/daum\.net$/, '다음'], [/instagram\.com$/, '인스타그램'], [/facebook\.com$/, '페이스북'],
+        [/kakao/, '카카오'], [/youtube\.com$/, '유튜브'], [/pos-pia\.workers\.dev$/, '포스피아 사이트']];
+      const hit = known.find(([re]) => re.test(h));
+      return hit ? hit[1] : h;
+    };
+    let v = fromUrl();
+    try {
+      if (v) localStorage.setItem(KEY, JSON.stringify({ v, t: Date.now() }));
+      else { const old = JSON.parse(localStorage.getItem(KEY) || 'null'); if (old && Date.now() - old.t < 30 * DAY) v = old.v; }
+    } catch (_) {}
+    return v || '직접 방문';
+  })();
+
   // ---- smooth scrolling ----
   // If the smooth scroller cannot run here (no animation frames, an embedded viewer, an error),
   // it switches itself off and the page falls back to the browser's own scrolling. Keep this safety net.
@@ -238,6 +264,7 @@
       if (est.elements.website.value) { finish(); return; } // a bot filled the hidden field: pretend success, send nothing
       const data = new URLSearchParams();
       new FormData(est).forEach((v, k) => { if (k.startsWith('entry.')) data.append(k, String(v).trim()); });
+      if (est.dataset.srcEntry) data.append('entry.' + est.dataset.srcEntry, SOURCE); // Google Form question "유입 경로"
       btn.disabled = true;
       try {
         await fetch(est.action, { method: 'POST', mode: 'no-cors', body: data });
@@ -330,7 +357,7 @@
       // answers go to the user's Google Sheet through its Apps Script web app (scripts/promo-apps-script.gs)
       const finish = () => { pmf.classList.add('sent'); done.hidden = false; pmf.scrollIntoView({ block: 'center', behavior: 'smooth' }); };
       if (pmf.elements.website.value) { finish(); return; } // a bot filled the hidden field
-      const data = new URLSearchParams(new FormData(pmf)); data.delete('agree'); data.append('page', location.pathname || 'promo');
+      const data = new URLSearchParams(new FormData(pmf)); data.delete('agree'); data.append('page', location.pathname || 'promo'); data.append('source', SOURCE);
       const btn = $('.submit', pmf); btn.disabled = true;
       fetch(pmf.action, { method: 'POST', mode: 'no-cors', body: data })
         .then(finish)
