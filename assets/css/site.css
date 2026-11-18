@@ -3,8 +3,8 @@
    Four sizes only: --fs-xl (English display), --fs-l (Korean headings), --fs-m, --fs-s (16px body).
    Spacing in multiples of 4. Controls 40 / 48 / 56px. Icons 16 / 24 / 32px. */
 
-@font-face { font-family: "Pretendard"; font-weight: 400; font-display: swap; src: url(../fonts/Pretendard-Regular.60dffa74.woff2) format("woff2"); }
-@font-face { font-family: "Pretendard"; font-weight: 700; font-display: swap; src: url(../fonts/Pretendard-Bold.7e2ac0f0.woff2) format("woff2"); }
+@font-face { font-family: "Pretendard"; font-weight: 400; font-display: swap; src: url(../fonts/Pretendard-Regular.c608ec68.woff2) format("woff2"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; font-display: swap; src: url(../fonts/Pretendard-Bold.d29e684f.woff2) format("woff2"); }
 @font-face { font-family: "Italiana"; font-weight: 400; font-display: swap; src: url(../fonts/Italiana-Regular.latin.woff2) format("woff2"); }
 
 :root {
@@ -838,7 +838,11 @@ html:has(.site-hdr.away) .est-bar { top: 8px; }
 .hcta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 40px; }
 .hcta .tel { display: inline-flex; align-items: center; min-height: 48px; font-size: var(--fs-m); font-weight: 700; color: var(--lp-ink); border-bottom: 2px solid transparent; transition: border-color .2s; }
 .hcta .tel:hover { border-color: var(--lp-v); }
-.hero-ph img { aspect-ratio: 5 / 4; }
+.hero-card { padding: clamp(28px, 3.5vw, 48px); border-radius: var(--r); background: var(--lp-2); }
+.hero-card ul { display: grid; gap: 4px; }
+.hero-card li { padding: 16px 0; font-size: var(--fs-l); font-weight: 700; line-height: 1.25; color: var(--lp-sub); }
+.hero-card p { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; margin-top: 20px; padding: 24px 28px; border-radius: 16px; background: var(--lp-v); color: var(--lp-v-ink); font-size: var(--fs-m); font-weight: 700; }
+.hero-card p b { font-size: var(--fs-l); line-height: 1.2; }
 
 /* partner strip */
 .lp-partners { padding: clamp(96px, 11vw, 176px) 0 0; }
@@ -896,6 +900,16 @@ html:has(.site-hdr.away) .est-bar { top: 8px; }
 .gallery .g2, .gallery .g3, .gallery .g4 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: center; }
 .gallery .g2 figcaption, .gallery .g3 figcaption, .gallery .g4 figcaption { margin: 0; }
 .cta-row { margin-top: clamp(40px, 5vw, 56px); }
+
+/* payment devices: four tiles in a 2×2 field */
+.tiles { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+.tiles div { display: grid; align-content: space-between; gap: 40px; min-height: 200px; padding: clamp(24px, 3vw, 40px); background: var(--lp-2); }
+.tiles div:nth-child(1) { border-radius: var(--r) 0 0 0; }
+.tiles div:nth-child(2) { border-radius: 0 var(--r) 0 0; }
+.tiles div:nth-child(3) { border-radius: 0 0 0 var(--r); }
+.tiles div:nth-child(4) { border-radius: 0 0 var(--r) 0; }
+.tiles dt { font-size: var(--fs-l); font-weight: 700; line-height: 1.2; }
+.tiles dd { margin: 0; color: var(--lp-sub); font-size: var(--fs-m); }
 
 /* numbers: one wide band in the second tone */
 .lp-band { margin-top: clamp(96px, 11vw, 176px); padding: clamp(56px, 7vw, 96px) 0; background: var(--lp-2); }
@@ -992,7 +1006,7 @@ html:has(.site-hdr.away) .est-bar { top: 8px; }
   .lp-steps li:nth-child(2) { border-radius: 0 var(--r) 0 0; }
   .lp-steps li:nth-child(3) { border-radius: 0 0 0 var(--r); }
   .lp-steps li:last-child { border-radius: 0 0 var(--r) 0; }
-  .pkgs { grid-template-columns: 1fr; max-width: 640px; }
+  .pkgs { grid-template-columns: 1fr; }
   .docs9 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 900px) {
@@ -1003,6 +1017,12 @@ html:has(.site-hdr.away) .est-bar { top: 8px; }
   .lp .ph.tall img { aspect-ratio: 4 / 3; }
 }
 @media (max-width: 680px) {
+  .tiles { grid-template-columns: minmax(0, 1fr); }
+  .tiles div { min-height: 0; gap: 12px; }
+  .tiles div:nth-child(n) { border-radius: 0; }
+  .tiles div:first-child { border-radius: 16px 16px 0 0; }
+  .tiles div:last-child { border-radius: 0 0 16px 16px; }
+  .hero-card li { padding: 8px 0; }
   .lp-hero h1 { font-size: clamp(32px, 8.6vw, 40px); }
   .lp-logo { margin-bottom: 28px; }
   .lp-logo .mark { width: 48px; }
