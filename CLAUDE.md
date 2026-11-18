@@ -78,6 +78,8 @@
   Apps Script(`scripts/promo-apps-script.gs`)는 접수마다 `NOTIFY_TO`로 알림 메일, `weeklyReport`는 사용자가 트리거(주 단위·월요일 아침)로 등록함.
   홈 견적 폼(구글 폼)은 사용자가 "유입 경로 안 해도 됨"이라 함 — 나중에 하려면 구글 폼에 단답형 질문을 추가·게시하고 그 entry 번호를 `#est-form`의 `data-src-entry`에 넣으면 됨.
   QR은 `?from=qr` 버전으로 새로 만들어 줌(인쇄물은 이것을 쓰라고 안내).
+- **검색엔진 준비(2026-11-18)**: `build.mjs` 위쪽 `SITE_URL`(택스리펀드.kr의 퓨니코드 주소) — 모든 페이지에 canonical·og:url·절대 경로 og:image, 홈에 LocalBusiness JSON-LD,
+  빌드할 때 `sitemap.xml`·`robots.txt`를 함께 만든다(새 페이지를 만들면 자동으로 들어감). `VERIFY.naver`에 네이버 서치어드바이저 코드 넣음(2026-11-18), 구글 코드는 받으면 `VERIFY.google`에.
 - 공지사항: 검색 + 목록(처음엔 모두 닫혀 있고 제목을 눌러야 내용이 펼쳐짐 — `[hidden]{display:none!important}` 지우지 말 것). 공지 추가는 `src/pages/notice.html`의 안내 주석대로, 홈의 Notice 3줄도 함께 바꾼다.
 - **첫 화면·위쪽 띠 사진(2026-11, 미리캔버스)**: 미리캔버스 디자인 "포스피아 홈페이지 히어로 배경 7장 (글자 없음)"(남색+빛줄기 템플릿, 글자 없음)을 사용자가 PNG로 받아 보낸 것.
   홈 `hero-pos`(포스기 화면의 APPROVED를 지우고 포스피아 로고 합성)·`hero-city-1`·`hero-city-2`, 회사 `sub-company`, 제품 `sub-product`, 가입 `sub-process`, 공지 `sub-notice` (모두 1920×1080 WebP).
