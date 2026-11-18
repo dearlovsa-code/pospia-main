@@ -73,6 +73,10 @@
 - **창업 오픈 패키지 랜딩(2026-11-18, `src/pages/open.html` → `/open`, 메뉴에 없음)**: 예비 창업자 대상. 프로모션 페이지와 같은 틀(`layout: landing` → body에 `lp` 클래스, 랜딩 스타일은 `.lp`로 공유).
   구성: 히어로 → 가맹점 로고 띠 → 혼자 준비 vs 포스피아 한 번에 → 패키지 3개(기본·추천·올인원, 버튼이 폼 항목 자동 체크 `data-pkg`) → D-30~D-DAY 일정(예시) → 서류 9개(가입절차와 같음) → 숫자 → FAQ → 폼.
   폼은 프로모션과 같은 Apps Script·같은 시트로 보냄(보낸 페이지 `/open`, 업종 `biz`·오픈 예정 `open`은 시트 10·11번째 칸). 패키지 구성·일정 문구는 초안(사용자 확인 필요).
+- **랜딩 디자인 정리(2026-11-18, 사용자 선택 "A")**: "AI 티" 검토(design-taste-frontend) 뒤 두 랜딩을 다시 짬. 색은 어두운 바탕 + 연보라 유지하되 **단색만**
+  (빛남·그라데이션·그림자·얇은 테두리·제목 위 작은 꼬리표·01/02 번호 없음, 면은 톤 차이 `--lp-2`·`--lp-3`로 구분). 아이콘 카드 대신 **블로그 실제 설치 사진**(assets/img의 tera·adams·bapsang·nongga, 사진 아래 매장명 캡션),
+  왼쪽 정렬 2단(`.lp-2col` — `.split`은 site.js가 글자를 쪼개는 클래스라 쓰면 안 됨, `.steps`·`.stats`·`.tl`도 다른 페이지 클래스라 `.lp-steps`·`.lp-stats`·`.cd`로 씀).
+  페이지는 `src/pages/promo.html`·`open.html` 그대로 고치면 됨. 폼·골라 담기·패키지 버튼 동작은 그대로.
 - **유입 경로 추적(2026-11-18)**: `site.js` 맨 위 `SOURCE` — 주소의 `?from=` 또는 `utm_source`(+`utm_campaign`), 없으면 들어온 페이지(네이버 검색·블로그·구글·인스타 등) → 없으면 "직접 방문".
   30일 동안 localStorage `pospia-src`에 기억. 프로모션 폼은 `source`로 보내고 Apps Script가 시트 9번째 칸 "유입 경로"에 기록.
   Apps Script(`scripts/promo-apps-script.gs`)는 접수마다 `NOTIFY_TO`로 알림 메일, `weeklyReport`는 사용자가 트리거(주 단위·월요일 아침)로 등록함.
