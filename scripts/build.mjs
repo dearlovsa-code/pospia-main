@@ -38,7 +38,7 @@ for (const file of (await readdir(path.join(ROOT, 'src/pages'))).filter(f => f.e
 <link rel="stylesheet" href="assets/css/site.css">
 <script>document.documentElement.classList.add('js')</script>
 </head>
-<body class="page-${path.basename(file, '.html')}">
+<body class="page-${path.basename(file, '.html')}${landing ? ' lp' : ''}">
 ${icons}
 ${hdr}
 <main id="main">

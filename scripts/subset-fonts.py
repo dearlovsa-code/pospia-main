@@ -20,7 +20,7 @@ import sys
 from fontTools import subset
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PAGES = ['index.html', 'company.html', 'product.html', 'process.html', 'notice.html', 'promo.html']
+PAGES = ['index.html', 'company.html', 'product.html', 'process.html', 'notice.html', 'promo.html', 'open.html']
 WEIGHTS = {'Regular': 400, 'Bold': 700}
 
 

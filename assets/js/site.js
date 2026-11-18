@@ -367,6 +367,14 @@
     if (sticky && fsec) new IntersectionObserver(es => es.forEach(x => sticky.classList.toggle('hide', x.isIntersecting)), { threshold: .05 }).observe(fsec);
   }
 
+  // ---- open-package landing: "이 구성으로 상담하기" ticks the matching items in the form ----
+  const PKG = { '기본': ['포스', '카드단말기', '인터넷'], '추천': ['포스', '카드단말기', '키오스크', '인터넷', '전화', 'CCTV'],
+    '올인원': ['포스', '카드단말기', '키오스크', '테이블오더', '인터넷', '전화', 'TV', 'CCTV', '택스리펀드'] };
+  $$('[data-pkg]').forEach(a => a.addEventListener('click', () => {
+    const want = PKG[a.dataset.pkg] || [];
+    $$('#pm-form-el input[name=items]').forEach(c => { c.checked = want.includes(c.value); c.dispatchEvent(new Event('change', { bubbles: true })); });
+  }));
+
   // ---- current year in the footer ----
   $$('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
 })();

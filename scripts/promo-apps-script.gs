@@ -1,5 +1,5 @@
 /**
- * 포스피아 프로모션 랜딩페이지 상담 신청 → 구글 시트에 한 줄씩 쌓기 + 접수 알림 메일 + 주간 리포트
+ * 포스피아 랜딩페이지(통신 프로모션 /promo, 창업 오픈 패키지 /open) 상담 신청 → 구글 시트에 한 줄씩 쌓기 + 접수 알림 메일 + 주간 리포트
  * 붙여 넣는 곳: 시트 메뉴 [확장 프로그램] → [Apps Script]  (코드 칸의 내용을 모두 지우고 이것만 붙여 넣기)
  * 바꾼 뒤에는 꼭: 저장 → [배포] → [배포 관리] → 연필(수정) → 버전 "새 버전" → [배포]
  *
@@ -7,7 +7,7 @@
  */
 const NOTIFY_TO = 'pos-pia@naver.com';
 
-const HEADERS = ['접수일시', '성함', '연락처', '설치 지역', '원하는 상품', '함께 상담할 장비', '상담 편한 시간', '보낸 페이지', '유입 경로'];
+const HEADERS = ['접수일시', '성함', '연락처', '설치 지역', '원하는 상품', '함께 상담할 장비', '상담 편한 시간', '보낸 페이지', '유입 경로', '업종', '오픈 예정'];
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -26,7 +26,7 @@ function doPost(e) {
     if (one('website')) return ok(); // 스팸 막기 칸이 채워져 있으면 저장하지 않음
     row = [
       Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss'),
-      one('name'), "'" + one('tel'), one('area'), many('items'), many('devices'), one('time'), one('page'), one('source') || '직접 방문'
+      one('name'), "'" + one('tel'), one('area'), many('items'), many('devices'), one('time'), one('page'), one('source') || '직접 방문', one('biz'), one('open')
     ];
     sheet.appendRow(row);
   } finally {
@@ -39,8 +39,8 @@ function doPost(e) {
 function notify(row) {
   if (!row || !NOTIFY_TO) return;
   const lines = HEADERS.map((h, i) => h + ': ' + String(row[i]).replace(/^'/, ''));
-  MailApp.sendEmail(NOTIFY_TO, '[포스피아] 새 상담 신청 - ' + row[1] + ' (' + row[8] + ')',
-    '프로모션 페이지로 새 상담 신청이 들어왔어요. 1시간 안에 연락해 주세요.\n\n' + lines.join('\n') +
+  MailApp.sendEmail(NOTIFY_TO, '[포스피아] 새 상담 신청 - ' + row[1] + ' (' + (String(row[7]).indexOf('open') >= 0 ? '오픈 패키지' : '통신 프로모션') + ' · ' + row[8] + ')',
+    '랜딩페이지로 새 상담 신청이 들어왔어요. 1시간 안에 연락해 주세요.\n\n' + lines.join('\n') +
     '\n\n시트: ' + SpreadsheetApp.getActiveSpreadsheet().getUrl());
 }
 
@@ -56,8 +56,8 @@ function weeklyReport() {
     rows.forEach(r => String(r[col] || '없음').split(split ? ', ' : '\u0000').forEach(v => { v = v.trim() || '없음'; m[v] = (m[v] || 0) + 1; }));
     return Object.entries(m).sort((a, b) => b[1] - a[1]).map(([k, v]) => '  - ' + k + ': ' + v + '건').join('\n') || '  - 없음';
   };
-  const body = '지난 7일 프로모션 상담 신청: ' + rows.length + '건\n\n' +
-    '■ 유입 경로별\n' + count(8) + '\n\n■ 원하는 상품별\n' + count(4, true) + '\n\n■ 함께 상담할 장비\n' + count(5, true) +
+  const body = '지난 7일 랜딩페이지 상담 신청: ' + rows.length + '건\n\n' +
+    '■ 페이지별\n' + count(7) + '\n\n■ 유입 경로별\n' + count(8) + '\n\n■ 원하는 상품별\n' + count(4, true) + '\n\n■ 함께 상담할 장비\n' + count(5, true) +
     '\n\n시트: ' + SpreadsheetApp.getActiveSpreadsheet().getUrl();
   MailApp.sendEmail(NOTIFY_TO, '[포스피아] 주간 상담 리포트 (' + rows.length + '건)', body);
 }
