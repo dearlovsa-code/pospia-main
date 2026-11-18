@@ -70,6 +70,11 @@
   구성: 히어로(그림 로고 위·POSPIA 글씨 아래) → 협력업체 흰 카드 띠 → "포스기 설치하는 곳에서 통신까지 한 번에·서류는 한 번, 한 곳에만" → 단품/조합 카드 → 통신 4종 → 결제기기 4종(주력) → 숫자 카드 → 골라 담기 → 4단계 → FAQ → 상담 폼.
   상담 버튼은 페이지 안 "상담하기"와 카카오 버튼만(사용자 요청). 폼은 사용자 구글 시트의 Apps Script 웹 앱(`scripts/promo-apps-script.gs`, 시트 첫 탭에 줄 추가)으로 보냄 — 주소는 promo.html의 form action.
   Apps Script를 고치면 **배포 관리 → 수정 → 새 버전 → 배포**를 눌러야 반영됨(2026-11-17 연결 시 여러 번 막혔던 부분). 2026-11-17 테스트 1건 성공(사용자 허락).
+- **유입 경로 추적(2026-11-18)**: `site.js` 맨 위 `SOURCE` — 주소의 `?from=` 또는 `utm_source`(+`utm_campaign`), 없으면 들어온 페이지(네이버 검색·블로그·구글·인스타 등) → 없으면 "직접 방문".
+  30일 동안 localStorage `pospia-src`에 기억. 프로모션 폼은 `source`로 보내고 Apps Script가 시트 9번째 칸 "유입 경로"에 기록.
+  Apps Script(`scripts/promo-apps-script.gs`)는 접수마다 `NOTIFY_TO`로 알림 메일, `weeklyReport`는 사용자가 트리거(주 단위·월요일 아침)로 등록함.
+  홈 견적 폼(구글 폼)은 사용자가 "유입 경로 안 해도 됨"이라 함 — 나중에 하려면 구글 폼에 단답형 질문을 추가·게시하고 그 entry 번호를 `#est-form`의 `data-src-entry`에 넣으면 됨.
+  QR은 `?from=qr` 버전으로 새로 만들어 줌(인쇄물은 이것을 쓰라고 안내).
 - 공지사항: 검색 + 목록(처음엔 모두 닫혀 있고 제목을 눌러야 내용이 펼쳐짐 — `[hidden]{display:none!important}` 지우지 말 것). 공지 추가는 `src/pages/notice.html`의 안내 주석대로, 홈의 Notice 3줄도 함께 바꾼다.
 - **첫 화면·위쪽 띠 사진(2026-11, 미리캔버스)**: 미리캔버스 디자인 "포스피아 홈페이지 히어로 배경 7장 (글자 없음)"(남색+빛줄기 템플릿, 글자 없음)을 사용자가 PNG로 받아 보낸 것.
   홈 `hero-pos`(포스기 화면의 APPROVED를 지우고 포스피아 로고 합성)·`hero-city-1`·`hero-city-2`, 회사 `sub-company`, 제품 `sub-product`, 가입 `sub-process`, 공지 `sub-notice` (모두 1920×1080 WebP).
