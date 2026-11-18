@@ -18,7 +18,7 @@ const built = [];
 const SITE_URL = 'https://xn--hy1b74g1qjdlpr8c.kr';
 // Ownership codes from Naver Search Advisor / Google Search Console (the content="…" part of their meta tag).
 // Leave empty until the user sends them; the tag is only written when a code is set.
-const VERIFY = { naver: '', google: '' };
+const VERIFY = { naver: 'f3e0f6e3a0be95a3aafe68be7b4172202f046b53', google: '' };
 const urlFor = file => SITE_URL + (file === 'index.html' ? '/' : '/' + path.basename(file, '.html'));
 const ORG_JSONLD = {
   '@context': 'https://schema.org', '@type': 'LocalBusiness', name: '포스피아', alternateName: 'POSPIA', legalName: '(주)포스피아',
