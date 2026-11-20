@@ -335,9 +335,9 @@
       const on = picks.filter(i => i.checked).map(i => i.value);
       combo.classList.toggle('all', on.length === picks.length);
       sel.textContent = on.length ? on.join(' + ') : '위에서 상품을 골라 보세요';
-      msg.innerHTML = on.length === picks.length ? '네 가지 모두 함께! <b>지원금 최대 60만원</b> 대상이에요'
+      msg.innerHTML = on.length === picks.length ? '네 가지 모두 함께! <b>지원금 최대 90만원</b> 대상이에요'
         : on.length ? (on.length === 1 ? '단품으로도 신청할 수 있어요. ' : '이 조합으로 신청할 수 있어요. ') + '함께하는 상품이 많을수록 혜택이 커져요'
-        : '네 가지를 모두 함께하면 <b>지원금 최대 60만원</b>';
+        : '네 가지를 모두 함께하면 <b>지원금 최대 90만원</b>';
     };
     picks.forEach(i => i.addEventListener('change', show));
     $('#combo-go').addEventListener('click', syncForm);
