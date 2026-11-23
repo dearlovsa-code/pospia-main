@@ -3,8 +3,8 @@
    Four sizes only: --fs-xl (English display), --fs-l (Korean headings), --fs-m, --fs-s (16px body).
    Spacing in multiples of 4. Controls 40 / 48 / 56px. Icons 16 / 24 / 32px. */
 
-@font-face { font-family: "Pretendard"; font-weight: 400; font-display: swap; src: url(../fonts/Pretendard-Regular.1100c77e.woff2) format("woff2"); }
-@font-face { font-family: "Pretendard"; font-weight: 700; font-display: swap; src: url(../fonts/Pretendard-Bold.85bd3519.woff2) format("woff2"); }
+@font-face { font-family: "Pretendard"; font-weight: 400; font-display: swap; src: url(../fonts/Pretendard-Regular.ecf3cc98.woff2) format("woff2"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; font-display: swap; src: url(../fonts/Pretendard-Bold.36a2ed6d.woff2) format("woff2"); }
 @font-face { font-family: "Italiana"; font-weight: 400; font-display: swap; src: url(../fonts/Italiana-Regular.latin.woff2) format("woff2"); }
 
 :root {
@@ -820,7 +820,8 @@ body:not(.lp) { --k-paper: #fff; --k-grey: #e6e4e0; --k-ink: #111; --k-sub: #5f5
 .k-hero h1 .rule { display: block; height: 1px; margin: clamp(24px, 3vw, 40px) 0 0; background: rgba(255, 255, 255, .45); transform-origin: center; transform: scaleX(0); transition: transform 1.4s var(--ease) .2s; }
 .k-hero h1 .rule.in { transform: none; }
 .k-hero h1 .ko { display: block; margin-top: 24px; font-size: var(--fs-m); font-weight: 400; color: rgba(255, 255, 255, .88); }
-.k-hero .slide.mc::after { background: rgba(10, 14, 22, .42); }
+.k-hero .slide::after { background: rgba(10, 14, 22, .56); }
+.k-hero .slide img { filter: none; }
 .k-hero .ctrl { justify-content: center; }
 .k-hero .bar { flex-basis: 160px; }
 .k-hero figcaption { display: none; }
