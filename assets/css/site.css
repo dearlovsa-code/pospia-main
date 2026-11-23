@@ -3,8 +3,8 @@
    Four sizes only: --fs-xl (English display), --fs-l (Korean headings), --fs-m, --fs-s (16px body).
    Spacing in multiples of 4. Controls 40 / 48 / 56px. Icons 16 / 24 / 32px. */
 
-@font-face { font-family: "Pretendard"; font-weight: 400; font-display: swap; src: url(../fonts/Pretendard-Regular.e45f0e61.woff2) format("woff2"); }
-@font-face { font-family: "Pretendard"; font-weight: 700; font-display: swap; src: url(../fonts/Pretendard-Bold.025f0842.woff2) format("woff2"); }
+@font-face { font-family: "Pretendard"; font-weight: 400; font-display: swap; src: url(../fonts/Pretendard-Regular.f57d79c7.woff2) format("woff2"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; font-display: swap; src: url(../fonts/Pretendard-Bold.f721f2ce.woff2) format("woff2"); }
 @font-face { font-family: "Italiana"; font-weight: 400; font-display: swap; src: url(../fonts/Italiana-Regular.latin.woff2) format("woff2"); }
 
 :root {
@@ -789,6 +789,143 @@ html:has(.site-hdr.away) .est-bar { top: 8px; }
   .nbar { flex-direction: column; align-items: stretch; }
   .nsearch { width: 100%; }
   .nbody { padding: 20px 8px 24px; }
+}
+
+/* =================== HOME (2026-11 redesign, reference keoc.kr — layout only) ===================
+   White page. Every section opens with an English label + a small Blue Fusion dot, a large bold Korean headline,
+   one grey sub line and a "MORE ——→" text link. Dark Overview band, grey Service band, rounded photo banner at the end. */
+.page-index { --k-paper: #fff; --k-grey: #e6e4e0; --k-ink: #111; --k-sub: #5f5a53; --k-dot: #496175;
+  --k-xl: clamp(44px, 1.6rem + 4.4vw, 104px); --k-l: clamp(30px, 1.2rem + 2.2vw, 56px); --k-m: clamp(24px, 1rem + 1vw, 32px);
+  --k-sec: clamp(104px, 12vw, 200px); background: var(--k-paper); }
+.page-index .k-sec { padding: var(--k-sec) 0 0; }
+.k-label { display: inline-flex; align-items: flex-end; gap: 8px; margin: 0; font-size: var(--k-m); font-weight: 400; line-height: 1.2; letter-spacing: -0.01em; color: var(--k-ink); }
+.k-label i { width: 8px; height: 8px; margin-bottom: 6px; border-radius: 50%; background: var(--k-dot); }
+.k-label.on-dark { color: #fff; }
+.k-label.on-dark i { background: #8fa6ba; }
+.k-h { margin: 40px 0 0; font-size: var(--k-l); font-weight: 700; line-height: 1.28; letter-spacing: -0.04em; color: var(--k-ink); }
+.k-sub { margin: 20px 0 0; color: var(--k-sub); font-size: 17px; line-height: 1.6; }
+.k-sub b { color: var(--k-ink); }
+.k-more { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; margin-top: 24px; font-size: 13px; font-weight: 700; letter-spacing: .02em; color: var(--k-ink); }
+.k-more i { position: relative; width: 48px; height: 1px; background: currentColor; transition: width .35s var(--ease); }
+.k-more i::after { content: ""; position: absolute; right: 0; top: -3px; width: 7px; height: 1px; background: currentColor; transform: rotate(35deg); transform-origin: right; }
+.k-more:hover i { width: 72px; }
+.k-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px 48px; flex-wrap: wrap; margin-bottom: 48px; }
+.k-head .k-more { margin-top: 0; }
+.k-side { align-self: start; position: sticky; top: calc(var(--hdr) + 40px); }
+
+/* hero: full-screen photos, big centred English line, a thin rule, the Korean line under it */
+.k-hero .copy { text-align: center; }
+.k-hero h1 { margin: 0; }
+.k-hero h1 .en { display: block; font-size: var(--k-xl); font-weight: 400; line-height: 1.06; letter-spacing: -0.03em; color: #fff; }
+.k-hero h1 .rule { display: block; height: 1px; margin: clamp(24px, 3vw, 40px) 0 0; background: rgba(255, 255, 255, .45); transform-origin: center; transform: scaleX(0); transition: transform 1.4s var(--ease) .2s; }
+.k-hero h1 .rule.in { transform: none; }
+.k-hero h1 .ko { display: block; margin-top: 24px; font-size: var(--fs-m); font-weight: 400; color: rgba(255, 255, 255, .88); }
+.k-hero .slide.mc::after { background: rgba(10, 14, 22, .42); }
+.k-hero .ctrl { justify-content: center; }
+.k-hero .bar { flex-basis: 160px; }
+.k-hero figcaption { display: none; }
+
+/* overview: black band, label left, statement + numbers right, the city photo faint behind */
+.page-index .k-over { position: relative; overflow: hidden; padding: var(--k-sec) 0; background: #0b0b0c; color: #fff; }
+.k-over .bg { position: absolute; inset: 0 0 0 30%; }
+.k-over .bg img { width: 100%; height: 100%; object-fit: cover; opacity: .34; -webkit-mask-image: linear-gradient(90deg, transparent, #000 40%); mask-image: linear-gradient(90deg, transparent, #000 40%); }
+.k-over-grid { position: relative; display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 7fr); gap: 32px; align-items: start; }
+.k-statement { margin: 0; max-width: 36em; font-size: clamp(18px, 1rem + .4vw, 22px); line-height: 1.75; color: rgba(255, 255, 255, .86); }
+.k-over .k-more { color: #fff; }
+.k-stats { margin-top: clamp(56px, 7vw, 96px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; max-width: 760px; }
+.k-stats li { display: grid; gap: 8px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .28); }
+.k-stats b { font-size: var(--k-m); line-height: 1.2; font-feature-settings: "tnum"; }
+.k-stats span { color: rgba(255, 255, 255, .7); }
+
+/* business: sticky title left, products stepping down in two columns on the right */
+.k-biz-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; }
+.k-biz-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 96px 48px; padding-top: 120px; }
+.k-biz-list li:nth-child(even) { transform: translateY(160px); }
+.k-biz-list li:last-child { margin-bottom: 160px; }
+.k-biz-list a { display: block; }
+.k-biz-list .ph { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 20px; background: var(--k-grey); }
+.k-biz-list img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.k-biz-list a:hover img { transform: scale(1.05); }
+.k-biz-list h3 { margin: 28px 0 0; font-size: var(--k-m); font-weight: 700; line-height: 1.2; letter-spacing: -0.03em; }
+.k-biz-list p { margin: 10px 0 0; color: var(--k-sub); }
+
+/* service: grey band with thin drawn curves, link rows */
+.page-index .k-svc { position: relative; overflow: hidden; margin-top: var(--k-sec); padding-bottom: var(--k-sec); background: var(--k-grey); }
+.k-waves { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: #b9b5ae; stroke-width: .6; opacity: .7; pointer-events: none; }
+.k-svc .wrap { position: relative; }
+.k-rows { margin-top: clamp(48px, 6vw, 80px); max-width: 1000px; }
+.k-rows a { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr) auto; align-items: center; gap: 24px; min-height: 88px; padding: 16px 4px; border-top: 1px solid #1d1b19; transition: padding .3s var(--ease); }
+.k-rows li:last-child a { border-bottom: 1px solid #1d1b19; }
+.k-rows a:hover { padding-left: 16px; }
+.k-rows b { font-size: var(--k-m); line-height: 1.2; letter-spacing: -0.03em; }
+.k-rows span { color: var(--k-sub); }
+
+/* merit: title left, four rows with a line on top */
+.k-merit-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; }
+.k-merit-list li { display: grid; grid-template-columns: 96px minmax(0, 1fr) 48px minmax(0, 220px); gap: 24px; align-items: start; padding: 32px 0 48px; border-top: 1px solid #1d1b19; }
+.k-merit-list li:last-child { padding-bottom: 0; }
+.k-merit-list .no { padding-top: 10px; font-size: 13px; font-weight: 700; font-feature-settings: "tnum"; }
+.k-merit-list h3 { margin: 0; font-size: var(--k-m); font-weight: 700; line-height: 1.25; letter-spacing: -0.03em; }
+.k-merit-list .en { display: block; margin-top: 10px; font-weight: 700; color: var(--k-sub); }
+.k-merit-list .ico { width: 40px; height: 40px; margin-top: 4px; stroke-width: 1.2; color: #6c6760; }
+.k-merit-list p { margin: 0; color: var(--k-sub); line-height: 1.7; }
+
+/* cases: news cards with rounded photos */
+.k-cases .cards4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 48px 24px; }
+.k-cases .ncard > a { display: block; height: auto; border-radius: 0; overflow: visible; background: none; box-shadow: none; }
+.k-cases .ncard > a:hover { transform: none; box-shadow: none; }
+.k-cases .ncard .ph { aspect-ratio: 1 / 1; border-radius: 20px; overflow: hidden; background: var(--k-grey); }
+.k-cases .ncard .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.k-cases .ncard a:hover .ph img { transform: scale(1.05); }
+.k-cases .ncard .tx { display: block; padding: 20px 0 0; }
+.k-cases .ncard .tit { margin: 0; font-weight: 700; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.k-cases .ncard .date { display: block; margin-top: 10px; color: var(--k-sub); font-size: 14px; font-feature-settings: "tnum"; }
+
+/* notice */
+.k-notice-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; align-items: start; }
+.k-notice .nlist { border-top: 1px solid #1d1b19; }
+.k-notice .nrow a { min-height: 88px; }
+
+/* estimate keeps its form; only the heading changes */
+.page-index .estimate { background: none; }
+.page-index .est-side .k-h { margin-top: 32px; }
+.page-index .est-form { background: #f6f5f2; border-color: transparent; }
+
+/* contact: one rounded photo banner */
+.page-index .k-contact { padding-bottom: var(--k-sec); }
+.k-banner { position: relative; overflow: hidden; border-radius: 24px; background: #0b0b0c; color: #fff; }
+.k-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+.k-banner .tx { position: relative; padding: clamp(48px, 7vw, 96px) clamp(28px, 6vw, 80px); }
+.k-banner .k-h { color: #fff; }
+.k-banner .k-sub { color: rgba(255, 255, 255, .82); }
+.k-banner .k-sub a { color: #fff; }
+.k-banner .acts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+@media (max-width: 1100px) {
+  .k-biz-grid, .k-merit-grid, .k-notice-grid, .k-over-grid { grid-template-columns: minmax(0, 1fr); }
+  .k-side { position: static; }
+  .k-biz-list { padding-top: 24px; }
+  .k-cases .cards4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .k-over .bg { inset: 40% 0 0 0; }
+}
+@media (max-width: 680px) {
+  .page-index { --k-sec: 88px; --k-xl: clamp(40px, 11vw, 48px); --k-l: 30px; --k-m: 22px; }
+  .k-h { margin-top: 24px; }
+  .k-biz-list { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+  .k-biz-list li:nth-child(even) { transform: none; }
+  .k-biz-list li:last-child { margin-bottom: 0; }
+  .k-rows a { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; min-height: 0; padding: 20px 0; }
+  .k-rows span { grid-column: 1; grid-row: 2; }
+  .k-rows .ico { grid-column: 2; grid-row: 1 / 3; }
+  .k-rows a:hover { padding-left: 0; }
+  .k-merit-list li { grid-template-columns: minmax(0, 1fr) 40px; gap: 12px 16px; padding: 24px 0 32px; }
+  .k-merit-list .no { grid-column: 1 / -1; padding-top: 0; }
+  .k-merit-list .tt { grid-column: 1; }
+  .k-merit-list .ico { grid-column: 2; grid-row: 2; width: 32px; height: 32px; }
+  .k-merit-list p { grid-column: 1 / -1; }
+  .k-stats { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .k-cases .cards4 { display: flex; grid-template-columns: none; }
+  .k-banner .acts .btn { flex: 1 1 100%; }
 }
 
 /* ---- LANDING pages (promo.html, open.html — layout: landing). Dark page, one flat accent (Quiet Violet), text only (no photos, user choice).
