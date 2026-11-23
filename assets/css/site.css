@@ -3,8 +3,8 @@
    Four sizes only: --fs-xl (English display), --fs-l (Korean headings), --fs-m, --fs-s (16px body).
    Spacing in multiples of 4. Controls 40 / 48 / 56px. Icons 16 / 24 / 32px. */
 
-@font-face { font-family: "Pretendard"; font-weight: 400; font-display: swap; src: url(../fonts/Pretendard-Regular.f57d79c7.woff2) format("woff2"); }
-@font-face { font-family: "Pretendard"; font-weight: 700; font-display: swap; src: url(../fonts/Pretendard-Bold.f721f2ce.woff2) format("woff2"); }
+@font-face { font-family: "Pretendard"; font-weight: 400; font-display: swap; src: url(../fonts/Pretendard-Regular.1100c77e.woff2) format("woff2"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; font-display: swap; src: url(../fonts/Pretendard-Bold.85bd3519.woff2) format("woff2"); }
 @font-face { font-family: "Italiana"; font-weight: 400; font-display: swap; src: url(../fonts/Italiana-Regular.latin.woff2) format("woff2"); }
 
 :root {
@@ -794,7 +794,7 @@ html:has(.site-hdr.away) .est-bar { top: 8px; }
 /* =================== HOME (2026-11 redesign, reference keoc.kr — layout only) ===================
    White page. Every section opens with an English label + a small Blue Fusion dot, a large bold Korean headline,
    one grey sub line and a "MORE ——→" text link. Dark Overview band, grey Service band, rounded photo banner at the end. */
-.page-index { --k-paper: #fff; --k-grey: #e6e4e0; --k-ink: #111; --k-sub: #5f5a53; --k-dot: #496175;
+body:not(.lp) { --k-paper: #fff; --k-grey: #e6e4e0; --k-ink: #111; --k-sub: #5f5a53; --k-dot: #496175;
   --k-xl: clamp(44px, 1.6rem + 4.4vw, 104px); --k-l: clamp(30px, 1.2rem + 2.2vw, 56px); --k-m: clamp(24px, 1rem + 1vw, 32px);
   --k-sec: clamp(104px, 12vw, 200px); background: var(--k-paper); }
 .page-index .k-sec { padding: var(--k-sec) 0 0; }
@@ -927,6 +927,38 @@ html:has(.site-hdr.away) .est-bar { top: 8px; }
   .k-cases .cards4 { display: flex; grid-template-columns: none; }
   .k-banner .acts .btn { flex: 1 1 100%; }
 }
+
+
+/* ---- same feel on every page (2026-11-23): white page, English label + dot, big Korean headline, sans English display, text MORE links ---- */
+body:not(.lp) { background: #fff; --serif: var(--sans); }
+body:not(.lp) .paper { background: #f4f3f1; }
+body:not(.lp) .dark { background: #0b0b0c; }
+body:not(.lp) .disp { font-family: var(--sans); letter-spacing: -0.03em; }
+body:not(.lp) .disp * { letter-spacing: inherit; }
+.dark .k-label, .dark .k-h { color: #fff; }
+.dark .k-label i { background: #8fa6ba; }
+.k-label + .k-h, .k-label + h2.k-h { margin-top: 32px; }
+h2.tl.k-h { font-size: var(--k-l); line-height: 1.28; letter-spacing: -0.04em; }
+.shead .k-label + .k-h { margin-top: 32px; }
+/* MORE: text with a long thin arrow instead of the round button */
+body:not(.lp) .more { height: auto; min-height: 44px; padding: 0; border-radius: 0; box-shadow: none; gap: 12px; font-size: 13px; letter-spacing: .02em; background: none; }
+body:not(.lp) .more .pl { display: none; }
+body:not(.lp) .more::after { content: ""; width: 48px; height: 1px; background: currentColor; transition: width .35s var(--ease); }
+body:not(.lp) .more:hover { background: none; color: inherit; box-shadow: none; }
+body:not(.lp) .more:hover::after { width: 72px; }
+/* sub-page title band: centred big English line, thin rule, Korean line (same as the home hero) */
+.subhero { align-items: center; text-align: center; }
+.subhero::after { background: rgba(10, 14, 22, .45); }
+.subhero .wrap { justify-content: center; }
+.subhero h1 .disp { font-size: var(--k-xl); line-height: 1.06; }
+.subhero h1 .ko { position: relative; margin-top: 56px; padding-top: 0; font-size: var(--fs-m); font-weight: 400; color: rgba(255, 255, 255, .88); }
+.subhero h1 .ko::before { content: ""; position: absolute; left: 50%; top: -32px; width: min(70vw, 720px); height: 1px; background: rgba(255, 255, 255, .45); transform: translateX(-50%); }
+.subhero .crumb { display: none; }
+.subtabs { background: #fff; box-shadow: 0 1px 0 #e4e2de; }
+.page-notice .k-sub { margin-bottom: clamp(40px, 5vw, 64px); }
+.subtabs ul { justify-content: center; }
+.subtabs a.cur::after { background: var(--k-dot); }
+@media (max-width: 680px) { .subtabs ul { justify-content: flex-start; } .subhero h1 .ko { margin-top: 44px; } .subhero h1 .ko::before { top: -24px; } }
 
 /* ---- LANDING pages (promo.html, open.html — layout: landing). Dark page, one flat accent (Quiet Violet), text only (no photos, user choice).
    One layout rule for every section: heading + one lead line on top (left aligned), content full width below.
