@@ -1,6 +1,6 @@
 /**
  * 포스피아 랜딩페이지(통신 프로모션 /promo, 창업 오픈 패키지 /open, 포스 견적 /quote) 신청 → 구글 시트에 한 줄씩 쌓기 + 접수 알림 메일 + 주간 리포트
- *   /promo · /open → 첫 번째 탭,  /quote(포스 견적) → "시트2" 탭 (없으면 맨 뒤에 자동으로 만듦)
+ *   /promo · /open → 첫 번째 탭,  /quote(포스 견적) → "신규견적문의" 탭 (없으면 맨 뒤에 자동으로 만듦)
  * 붙여 넣는 곳: 시트 메뉴 [확장 프로그램] → [Apps Script]  (코드 칸의 내용을 모두 지우고 이것만 붙여 넣기)
  * 바꾼 뒤에는 꼭: 저장 → [배포] → [배포 관리] → 연필(수정) → 버전 "새 버전" → [배포]
  *
@@ -9,7 +9,7 @@
 const NOTIFY_TO = 'pos-pia@naver.com';
 
 const HEADERS = ['접수일시', '성함', '연락처', '설치 지역', '원하는 상품', '함께 상담할 장비', '상담 편한 시간', '보낸 페이지', '유입 경로', '업종', '오픈 예정'];
-const QUOTE_SHEET = '시트2';
+const QUOTE_SHEET = '신규견적문의';
 const QUOTE_HEADERS = ['접수일시', '성함', '연락처', '상호명', '설치 지역', '사업자 구분', '원하는 기기', '함께 설치', '설치 희망 시기', '추가 문의', '유입 경로'];
 
 function doPost(e) {
@@ -44,7 +44,7 @@ function doPost(e) {
   return ok();
 }
 
-/** 포스 견적 탭 ("시트2"): 없으면 맨 뒤에 만들고, 제목 줄을 넣음. 첫 번째 탭은 건드리지 않음 */
+/** 포스 견적 탭 ("신규견적문의"): 없으면 맨 뒤에 만들고, 제목 줄을 넣음. 첫 번째 탭은 건드리지 않음 */
 function quoteSheet() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sh = ss.getSheetByName(QUOTE_SHEET) || ss.insertSheet(QUOTE_SHEET, ss.getSheets().length);
