@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const PAGES = { index: '1-홈', company: '2-회사소개', product: '3-제품소개', process: '4-가입절차', notice: '5-공지사항', promo: '6-프로모션', open: '7-오픈패키지' };
+const PAGES = { index: '1-홈', company: '2-회사소개', product: '3-제품소개', process: '4-가입절차', notice: '5-공지사항', promo: '6-프로모션', open: '7-오픈패키지', quote: '8-포스견적' };
 const TYPES = { woff2: 'font/woff2', jpg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
 const cache = new Map();
 const dataUri = async rel => {
@@ -65,7 +65,7 @@ const site = await readFile(path.join(ROOT, 'assets/js/site.js'), 'utf8');
       if (hash) setTimeout(() => { const t = d.getElementById(hash); if (t) t.scrollIntoView(); }, 300);
       d.addEventListener('click', e => {
         const a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
-        const m = a.getAttribute('href').match(/^(index|company|product|process|notice|promo|open)\\.html(?:#(.*))?$/);
+        const m = a.getAttribute('href').match(/^(index|company|product|process|notice|promo|open|quote)\\.html(?:#(.*))?$/);
         if (m) { e.preventDefault(); go(m[1], m[2] || ''); }
         else if (/^https?:|^mailto:|^tel:/.test(a.getAttribute('href'))) { e.preventDefault(); window.open(a.href, a.target === '_blank' ? '_blank' : '_top'); }
       });
@@ -82,5 +82,6 @@ const site = await readFile(path.join(ROOT, 'assets/js/site.js'), 'utf8');
   await writeFile(path.join(ROOT, '미리보기-전체.html'), shell);
   await writeFile(path.join(ROOT, '미리보기-프로모션.html'), shellFor('promo'));
   await writeFile(path.join(ROOT, '미리보기-오픈패키지.html'), shellFor('open')); // the landing page is not in the menu, so it gets its own entry file
+  await writeFile(path.join(ROOT, '미리보기-포스견적.html'), shellFor('quote'));
   console.log('preview rebuilt: 미리보기-전체.html', (shell.length / 1048576).toFixed(1) + 'MB');
 }

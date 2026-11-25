@@ -375,6 +375,24 @@
     $$('#pm-form-el input[name=items]').forEach(c => { c.checked = want.includes(c.value); c.dispatchEvent(new Event('change', { bubbles: true })); });
   }));
 
+  // ---- quote page (/quote): plan buttons tick the plan in the form; buying asks which multipad; ?plan=rent-new|rent-used|buy-new|buy-used preselects ----
+  const qpad = $('.q-pad');
+  if (qpad && pmf) {
+    const plans = $$('input[name=plan]', pmf), pads = $$('input[name=pad]', qpad);
+    const sync = () => {
+      const buy = plans.some(i => i.checked && i.value.startsWith('구매'));
+      qpad.hidden = !buy; pads[0].required = buy;
+      if (!buy) pads.forEach(i => { i.checked = false; });
+    };
+    const pick = v => { const r = plans.find(i => i.value === v); if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); } };
+    plans.forEach(i => i.addEventListener('change', sync));
+    $$('[data-plan]').forEach(a => a.addEventListener('click', () => pick(a.dataset.plan)));
+    const QP = { 'rent-new': '임대 신규', 'rent-used': '임대 중고', 'buy-new': '구매 신규', 'buy-used': '구매 중고' };
+    const want = QP[new URLSearchParams(location.search).get('plan')];
+    if (want) pick(want);
+    sync();
+  }
+
   // ---- current year in the footer ----
   $$('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
 })();

@@ -1090,6 +1090,18 @@ body:not(.lp) .more:hover::after { width: 72px; }
 /* open: documents 3×3 */
 .docs9 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .docs9 li { display: flex; align-items: center; min-height: 80px; padding: 16px 28px; border-radius: 16px; background: var(--lp-2); font-size: var(--fs-m); font-weight: 700; }
+/* quote page (/quote): price notes inside the plan cards, and the "send documents" box */
+.pkg li.vat, .pkg li.set { font-size: 16px; font-weight: 400; color: var(--lp-sub); }
+.pkg li.set { margin-top: 8px; line-height: 1.6; }
+.pkg.hot li.vat, .pkg.hot li.set { color: #4a4250; }
+.q-send { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; margin-top: 24px; padding: clamp(24px, 3vw, 40px); border-radius: var(--r); background: var(--lp-v); color: var(--lp-v-ink); }
+.q-send-t { margin: 0; font-size: var(--fs-m); font-weight: 700; }
+.q-send-t span { display: block; margin-top: 4px; font-size: 16px; font-weight: 400; color: #4a4250; }
+.q-send-l { display: flex; flex-wrap: wrap; gap: 12px; }
+.q-send-l a { display: grid; gap: 2px; min-height: 56px; padding: 8px 24px; border-radius: 16px; background: var(--lp-v-ink); color: var(--lp-v); flex: 1 1 220px; transition: background .2s; }
+.q-send-l a:hover { background: #000; }
+.q-send-l span { font-size: 16px; opacity: .8; }
+.q-send-l b { font-size: var(--fs-m); }
 
 /* FAQ */
 .lp .faqs { display: grid; gap: 12px; }
@@ -1109,9 +1121,9 @@ body:not(.lp) .more:hover::after { width: 72px; }
 .reach b { font-size: var(--lp-m); }
 .reach span { color: var(--lp-sub); }
 .pm-form { color: var(--lp-ink); background: var(--lp-2); border: 0; }
-.pm-form .fld input { background: var(--lp-bg); border-color: #4a4552; color: var(--lp-ink); }
-.pm-form .fld input::placeholder { color: #9d96a5; opacity: 1; }
-.pm-form .fld input:focus { border-color: var(--lp-v); box-shadow: none; }
+.pm-form .fld input, .pm-form .fld textarea { background: var(--lp-bg); border-color: #4a4552; color: var(--lp-ink); }
+.pm-form .fld input::placeholder, .pm-form .fld textarea::placeholder { color: #9d96a5; opacity: 1; }
+.pm-form .fld input:focus, .pm-form .fld textarea:focus { border-color: var(--lp-v); box-shadow: none; }
 .pm-form .lb .sub, .pm-form .agree p { color: var(--lp-sub); }
 .pm-form .lb i, .pm-form .chk i, .pm-form .ferr { color: #f2a6a6; }
 .pm-form .pill span { background: var(--lp-3); border-color: transparent; color: var(--lp-ink); }
@@ -1168,5 +1180,6 @@ body:not(.lp) .more:hover::after { width: 72px; }
   .lmq li { width: 144px; height: 64px; }
   .lmq li.tx { min-width: 144px; }
   .pm-form .pill { flex: 1 1 calc(50% - 4px); }
+  .pm-form .q-wide .pill { flex: 1 1 100%; }
   .lp .kakao, .lp .kakao:not(.lift) { bottom: 16px; }
 }
