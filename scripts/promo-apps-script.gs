@@ -10,7 +10,7 @@ const NOTIFY_TO = 'pos-pia@naver.com';
 
 const HEADERS = ['접수일시', '성함', '연락처', '설치 지역', '원하는 상품', '함께 상담할 장비', '상담 편한 시간', '보낸 페이지', '유입 경로', '업종', '오픈 예정'];
 const QUOTE_SHEET = '시트2';
-const QUOTE_HEADERS = ['접수일시', '견적 종류', '성함', '연락처', '상호명', '설치 지역', '사업자 구분', '멀티패드', '함께 설치', '설치 희망 시기', '추가 문의', '유입 경로'];
+const QUOTE_HEADERS = ['접수일시', '성함', '연락처', '상호명', '설치 지역', '사업자 구분', '원하는 기기', '함께 설치', '설치 희망 시기', '추가 문의', '유입 경로'];
 
 function doPost(e) {
   const p = (e && e.parameters) || {};
@@ -25,7 +25,7 @@ function doPost(e) {
   let row = null;
   try {
     if (isQuote) {
-      row = [now, one('plan'), one('name'), "'" + one('tel'), one('shop'), one('area'), one('bizType'), one('pad'),
+      row = [now, one('name'), "'" + one('tel'), one('shop'), one('area'), one('bizType'), many('devices'),
         many('items'), one('open'), p.memo && p.memo[0] ? String(p.memo[0]).slice(0, 500) : '', one('source') || '직접 방문'];
       quoteSheet().appendRow(row);
     } else {
@@ -63,7 +63,7 @@ function notify(row) {
 function notifyQuote(row) {
   if (!row || !NOTIFY_TO) return;
   const lines = QUOTE_HEADERS.map((h, i) => h + ': ' + String(row[i]).replace(/^'/, ''));
-  MailApp.sendEmail(NOTIFY_TO, '[포스피아] 새 포스 견적 신청 - ' + row[2] + ' (' + row[1] + ' · ' + row[11] + ')',
+  MailApp.sendEmail(NOTIFY_TO, '[포스피아] 새 포스 견적 신청 - ' + row[1] + ' (' + row[6] + ' · ' + row[10] + ')',
     '포스 견적 페이지로 새 신청이 들어왔어요. 1시간 안에 연락해 주세요.\n\n' + lines.join('\n') +
     '\n\n시트("' + QUOTE_SHEET + '" 탭): ' + SpreadsheetApp.getActiveSpreadsheet().getUrl());
 }
